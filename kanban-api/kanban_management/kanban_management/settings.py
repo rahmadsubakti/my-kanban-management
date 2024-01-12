@@ -30,7 +30,10 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+else:
+    ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -48,8 +51,7 @@ INSTALLED_APPS = [
     'kanban',
     'registration',
     'jobs',
-    'corsheaders',
-]
+] # add corsheaders later
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -59,12 +61,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware'
-]
+    
+] #'corsheaders.middleware.CorsMiddleware'
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8000'
-]
+#CORS_ALLOWED_ORIGINS = [
+#    'http://localhost:8000'
+#]
 
 ROOT_URLCONF = 'kanban_management.urls'
 
@@ -90,12 +92,21 @@ WSGI_APPLICATION = 'kanban_management.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'test_db.sqlite3'
+        }
+    }
+
+else:
+    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
 
 
 # Password validation

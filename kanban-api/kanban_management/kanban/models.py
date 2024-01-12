@@ -14,7 +14,6 @@ class Board(models.Model):
 class Column(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=60)
-    color = models.CharField(max_length=7, default="#808080") # replace max_length with 7
     board = models.ForeignKey(Board, on_delete=models.CASCADE, related_name="columns")
 
     def __str__(self):
