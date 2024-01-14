@@ -25,6 +25,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "components/*": ["src/components/*"], 
+      "forms/*": ["src/forms/*"],
     }
   },
   "include": ["src"],

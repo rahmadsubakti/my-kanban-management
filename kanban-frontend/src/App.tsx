@@ -2,6 +2,7 @@ import './App.scss';
 
 import { useState } from 'react';
 import Modal from 'components/Modal/Modal';
+import TaskForm from './forms/TaskForm';
 
 function App() {
 
@@ -14,7 +15,7 @@ function App() {
         showModal={showModal}
         closeModal={() => setShowModal(false)}
       >
-        <h1>This is modal</h1>
+        <TaskForm />
       </Modal>
     </>
   )

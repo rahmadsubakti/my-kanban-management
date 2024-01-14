@@ -1,7 +1,7 @@
 import React from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
 
 import './icon-button.scss';
 
@@ -19,6 +19,14 @@ export const DeleteButton:React.FC<buttonProps> = ({...rest}) => {
   return (
     <button className="btn-icon btn-del" {...rest}>
       <FontAwesomeIcon  icon={faTrash} />
+    </button>
+  )
+}
+
+export const DeleteItemButton:React.FC<buttonProps> = ({...rest}) => {
+  return (
+    <button className="btn-icon btn-del-item" {...rest}>
+      <FontAwesomeIcon  icon={faX} />
     </button>
   )
 }

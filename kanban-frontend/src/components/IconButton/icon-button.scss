@@ -21,4 +21,12 @@
       color: $red-hover;
     }
   }
+
+  &.btn-del-item {
+    color: $medium-grey;
+
+    &:hover {
+      color: $red-hover;
+    }
+  }
 }
