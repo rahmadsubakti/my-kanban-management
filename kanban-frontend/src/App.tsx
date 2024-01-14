@@ -1,12 +1,21 @@
 import './App.scss';
 
-import TaskSegment from 'components/TaskSegment/TaskSegment';
+import { useState } from 'react';
+import Modal from 'components/Modal/Modal';
 
 function App() {
 
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <>
-      <TaskSegment />
+      <button onClick={() => setShowModal(true)}>Show modal</button>
+      <Modal 
+        showModal={showModal}
+        closeModal={() => setShowModal(false)}
+      >
+        <h1>This is modal</h1>
+      </Modal>
     </>
   )
 }
