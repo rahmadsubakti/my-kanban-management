@@ -1,12 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700&display=swap');
 
-@import '/src/global-styles/typograhpy';
+@import '/src/global-styles/typography';
+@import '/src/global-styles/colors';
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+  background-color: $dark-grey;
 }
 
 h1 {

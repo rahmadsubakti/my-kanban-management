@@ -1,10 +1,12 @@
-import './App.scss'
+import './App.scss';
+
+import TaskSegment from 'components/TaskSegment/TaskSegment';
 
 function App() {
 
   return (
     <>
-      <h1>Hello</h1>
+      <TaskSegment />
     </>
   )
 }

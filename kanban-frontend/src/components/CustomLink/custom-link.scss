@@ -1,0 +1,18 @@
+@import '/src/global-styles/colors';
+@import '/src/global-styles/typography';
+
+.custom-link {
+  display: inline-flex;
+  width: 100%;
+  gap: 1rem;
+  padding: .875rem 1rem;
+  color: $white;
+  text-decoration: none;
+  cursor: pointer;
+
+  &.active {
+    background-color: $main-purple; // for active link
+    border-top-right-radius: 20rem; // for active link
+    border-bottom-right-radius: 20rem; // for active link
+  }
+}

@@ -1,0 +1,29 @@
+@import '/src/global-styles/colors';
+@import '/src/global-styles/typography';
+
+.textbox-container {
+  width: 100%;
+  border-radius: .25rem;
+  position: relative;
+
+  input[type=text] {
+    background: transparent;
+    border: 1px solid $lines-dark;
+    padding: .5rem 7.5rem .5rem 1rem;
+    width: 100%;
+    color: $white;
+    @include body-l;
+
+    &:focus {
+      outline: 1px solid $white;
+    }
+  }
+
+  .text-error {
+    color: $red;
+    @include body-l;
+    position: absolute;
+    top: .5rem;
+    right: 1rem;
+  }
+}

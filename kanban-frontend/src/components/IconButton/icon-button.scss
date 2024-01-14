@@ -1,0 +1,24 @@
+@import '/src/global-styles/colors';
+
+.btn-icon {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 1.1rem;
+
+  &.btn-edit {
+    color: $main-purple;
+
+    &:hover {
+      color: $main-purple-hover;
+    }
+  }
+
+  &.btn-del {
+    color: $red;
+
+    &:hover {
+      color: $red-hover;
+    }
+  }
+}
