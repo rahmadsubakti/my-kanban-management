@@ -2,15 +2,18 @@
 import './custom-link.scss';
 import './fontello.css';
 
-const CustomLink = ({children}) => {
+export const IconLink = () => <i className="icon-shape"></i>
+
+type LinkType = {
+  children: string,
+}
+export const CustomLink = ({children}:LinkType) => {
 
   // include active classname if link is active
   return (
     <a href="#" className='custom-link' >
-      <i className="icon-shape"></i>
+      <IconLink />
       <h3>{children}</h3>
     </a>
   )
 }
-
-export default CustomLink;

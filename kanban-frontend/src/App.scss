@@ -29,3 +29,9 @@ h3 {
 h4 {
   @include heading-s;
 }
+
+main {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: 1fr;
+}

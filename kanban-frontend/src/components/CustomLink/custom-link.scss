@@ -5,14 +5,19 @@
   display: inline-flex;
   width: 100%;
   gap: 1rem;
-  padding: .875rem 1rem;
+  padding: .875rem 2rem;
   color: $white;
   text-decoration: none;
   cursor: pointer;
+  border-top-right-radius: 20rem; // for active link
+  border-bottom-right-radius: 20rem; // for active link
 
   &.active {
     background-color: $main-purple; // for active link
-    border-top-right-radius: 20rem; // for active link
-    border-bottom-right-radius: 20rem; // for active link
+  }
+
+  &:hover {
+    background-color: $white;
+    color: $main-purple;
   }
 }

@@ -1,0 +1,22 @@
+@import '/src/global-styles/colors';
+
+header {
+  background-color: $dark-grey;
+  border-left: 1px solid $lines-dark;
+
+  .board-title-container {
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .board-title {
+      color: $white;
+    }
+
+    .btn-groups {
+      display: flex;
+      gap: .5rem;
+    }
+  }
+}

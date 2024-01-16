@@ -1,0 +1,20 @@
+@import '/src/global-styles/colors';
+@import '/src/global-styles/typography';
+
+.board-list-containers {
+  .num-boards {
+    color: $medium-grey;
+    padding: .875rem 2rem;
+  }
+
+  .btn-new-board {
+    background-color: transparent;
+    color: $main-purple;
+    @include heading-m;
+    border: none;
+    display: flex;
+    gap: 1rem;
+    padding: .875rem 2rem;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,44 @@
+@import '/src/global-styles/colors';
+@import '/src/global-styles/typography';
+
+.board-detail {
+  padding: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+
+  .column {
+    width: 280px;
+
+    .column-title-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+
+      .column-title {
+        color: $medium-grey;
+      }
+
+      .btn-groups {
+        display: flex;
+        gap: .5rem;
+      }
+    
+    }
+    .task-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+  }
+
+  .add-column {
+    background-color: $dark-grey;
+    border-radius: .375rem;
+    border: none;
+    width: 280px;
+    cursor: pointer;
+    @include heading-xl;
+    color: $medium-grey;
+  }
+}

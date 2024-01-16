@@ -1,6 +1,6 @@
 export type SubTaskType = {
   title: string,
-  is_done: boolean,
+  isDone: boolean,
 }
 
 export type TaskType = {
