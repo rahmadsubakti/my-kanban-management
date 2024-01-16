@@ -3,6 +3,7 @@ import useModal from "@/utils/useModal";
 import { EditButton, DeleteButton } from "@/components/IconButton/IconButton";
 import Modal from "@/components/Modal/Modal";
 import BoardForm from "@/forms/BoardForm";
+import DeleteDialog from "@/containers/Dialog/Dialog";
 
 import './header.scss';
 
@@ -27,6 +28,14 @@ const Header = () => {
         </div>
       </div>
       <Modal showModal={showModalEdit} closeModal={closeModalEdit}><BoardForm /></Modal>
+      <Modal showModal={showModalDel} closeModal={closeModalDel}>
+        <DeleteDialog
+          type="board"
+          name={name} 
+          delAction={() => console.log('deleted')} 
+          cancelAction={closeModalDel}
+        />
+      </Modal>
     </header>
   )
 }

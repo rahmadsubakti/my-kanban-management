@@ -1,0 +1,23 @@
+@import '/src/global-styles/colors';
+@import '/src/global-styles/typography';
+
+.del-dialog-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  .dialog-title {
+    color: $red;
+  }
+
+  .dialog-msg {
+    color: $medium-grey;
+    @include body-l;
+  }
+
+  .btn-groups {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+  }
+}

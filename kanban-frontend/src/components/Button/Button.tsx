@@ -1,29 +1,27 @@
-import React from "react";
+import React, { PropsWithoutRef } from "react";
 
 import './button.scss';
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  typeButton: string
+type ButtonProps = {
+  typeButton?: String,
+  OnClick: Function,
+  children: any
 }
 
-const Button:React.FC<ButtonProps> = ({typeButton, children, ...rest}) => {
-  return <button className={`btn ${typeButton}`} {...rest}>{children}</button>
+// FIX THE GODDAMNIT BUTTON TYPE
+
+const Button = ({typeButton, children, OnClick}:ButtonProps) => {
+  return <button className={`btn ${typeButton}`} onClick={OnClick}>{children}</button>
 }
 
-export const PrimaryBtn:React.FC<
-    React.ButtonHTMLAttributes<HTMLButtonElement>
-  > = ({children, ...rest}) => {
-  return <Button typeButton="primary" {...rest}>{children}</Button>
+export const PrimaryBtn = ({children, OnClick}:ButtonProps) => {
+  return <Button typeButton="primary" OnClick={OnClick}>{children}</Button>
 }
 
-export const SecondaryBtn:React.FC<
-    React.ButtonHTMLAttributes<HTMLButtonElement>
-  > = ({children, ...rest}) => {
-  return <Button typeButton="secondary" {...rest}>{children}</Button>
+export const SecondaryBtn = ({children, OnClick}:ButtonProps) => {
+  return <Button typeButton="secondary" OnClick={OnClick}>{children}</Button>
 }
 
-export const DangerBtn:React.FC<
-    React.ButtonHTMLAttributes<HTMLButtonElement>
-  > = ({children, ...rest}) => {
-  return <Button typeButton="danger" {...rest}>{children}</Button>
+export const DangerBtn = ({children, OnClick}:ButtonProps) => {
+  return <Button typeButton="danger" OnClick={OnClick}>{children}</Button>
 }
