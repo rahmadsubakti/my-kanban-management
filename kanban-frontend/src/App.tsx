@@ -18,18 +18,11 @@ const Main = () => {
   )
 }
 
-
-import TaskInfo from './containers/TaskInfo/TaskInfo';
-
-import useModal from './utils/useModal';
-
 function App() {
-  const { showModal, openModal, closeModal } = useModal();
 
   return (
     <>
-      <button onClick={openModal}>Show modal</button>
-      <Modal showModal={showModal} closeModal={closeModal}><TaskInfo /></Modal>  
+      <Main />
     </>
   )
 }
