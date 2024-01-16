@@ -1,0 +1,32 @@
+@import '/src/global-styles/colors';
+@import '/src/global-styles/typography';
+
+.task-info-container {
+  width: 30rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  .task-title {
+    color: $white;
+  }
+
+  .task-description {
+    @include body-l;
+    color: $medium-grey;
+  }
+
+  .subtasks-container {
+    .subtask-info {
+      font-size: .75rem;
+      color: $white;
+      margin-bottom: 1rem;
+    }
+
+    .subtasks {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+  }
+}
