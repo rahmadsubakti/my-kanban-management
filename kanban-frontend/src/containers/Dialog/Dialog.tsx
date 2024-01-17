@@ -5,11 +5,11 @@ import './dialog.scss';
 type DeleteDialog = {
   type: string,
   name: string,
-  delAction: Function,
-  cancelAction: Function,
+  onDelete: Function,
+  onCancel: Function,
 }
 
-const DeleteDialog = ({type, name, delAction, cancelAction}:DeleteDialog) => {
+const DeleteDialog = ({type, name, onDelete, onCancel}:DeleteDialog) => {
   let msg:string = '';
 
   switch(type) {
@@ -23,13 +23,14 @@ const DeleteDialog = ({type, name, delAction, cancelAction}:DeleteDialog) => {
       msg = `Are you sure you want to delete the '${name}' task and its subtasks? This action cannot be reversed.`
       break;
   }
+
   return (
     <div className="del-dialog-container">
       <h2 className="dialog-title">Delete this {type}</h2>
       <p className="dialog-msg">{msg}</p>
       <div className="btn-groups">
-        <DangerBtn OnClick={delAction}>Delete</DangerBtn>
-        <SecondaryBtn OnClick={cancelAction}>Cancel</SecondaryBtn>
+        <DangerBtn OnClick={onDelete}>Delete</DangerBtn>
+        <SecondaryBtn OnClick={onCancel}>Cancel</SecondaryBtn>
       </div>
     </div>
   )

@@ -27,7 +27,9 @@ const Header = () => {
           />
         </div>
       </div>
-      <Modal showModal={showModalEdit} closeModal={closeModalEdit}><BoardForm /></Modal>
+      <Modal showModal={showModalEdit} closeModal={closeModalEdit}>
+        <BoardForm value={{name: name}} closeModalAction={closeModalEdit} />
+      </Modal>
       <Modal showModal={showModalDel} closeModal={closeModalDel}>
         <DeleteDialog
           type="board"
