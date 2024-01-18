@@ -1,18 +1,24 @@
 import Checkbox from "@/components/Checkbox/Checkbox";
 
+import { TaskType, SubTaskType } from "@/utils/types";
+
 import './task-info.scss';
 
-const TaskInfo = () => {
+const TaskInfo = ({...task}:TaskType) => {
+  const numSubTasksDone = task.subtasks 
+    ? task.subtasks.filter((subtask:SubTaskType) => subtask.isDone == true).length 
+    : 0;
+
+  const totalSubTasks = task.subtasks ? task.subtasks.length : 0;
+
   return (
     <div className="task-info-container">
-      <h2 className="task-title">Research pricing points of various competitors and trial different business models</h2>
-      <p className="task-description">We know what we're planning to build for version one. Now we need to finalise the first pricing model we'll use. Keep iterating the subtasks until we have a coherent proposition.</p>
+      <h2 className="task-title">{task.title}</h2>
+      <p className="task-description">{task.description}</p>
       <div className="subtasks-container">
-        <h5 className="subtask-info">Subtasks (2 of 3)</h5>
+        <h5 className="subtask-info">Subtasks ( {numSubTasksDone} of {totalSubTasks})</h5>
         <div className="subtasks">
-          <Checkbox>Research competitor pricing and business models</Checkbox>
-          <Checkbox>Outline a business model that works for our solution</Checkbox>
-          <Checkbox>Talk to potential customers about our proposed solution and ask for fair price expectancy</Checkbox>
+          {task.subtasks?.map(subtask => <Checkbox key={subtask.id} checked={subtask.isDone}>{subtask.title}</Checkbox>)}
         </div>
       </div>
     </div>

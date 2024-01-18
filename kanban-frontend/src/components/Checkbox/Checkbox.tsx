@@ -2,12 +2,15 @@ import React from 'react';
 
 import './checkbox.scss';
 
-// add register for react hook form later
+type CheckboxType = {
+  checked: boolean,
+  children: string,
+}
 
-const Checkbox = ({children}) => {
+const Checkbox = ({checked, children}:CheckboxType) => {
   return (
     <label className="checkbox-container">
-      <input type="checkbox" defaultChecked/>
+      <input type="checkbox" defaultChecked={checked}/>
       <span className="checkbox-checkmark"></span>
       <div className="text">{children}</div>
     </label>

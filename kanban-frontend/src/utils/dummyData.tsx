@@ -11,7 +11,7 @@ const dummyData = {
         {
           id: createId(),
           title: "Build UI for onboarding flow",
-          description: "",
+          description: "oiejdoiwejfjwefj",
 
           subtasks: [
             {
