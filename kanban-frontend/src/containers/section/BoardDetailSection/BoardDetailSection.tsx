@@ -1,3 +1,7 @@
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { useDrop } from "react-dnd";
+
 import { useBoardDetail } from "@/utils/stateStore";
 import TaskSegment from "@/components/TaskSegment/TaskSegment";
 import { EditButton, DeleteButton } from "@/components/IconButton/IconButton";
@@ -15,6 +19,20 @@ const ColumnSection = ({...column}:ColumnType) => {
   const tasks = column.tasks ? column.tasks : [];
   const value = {id: column.id, name: column.name}
 
+  // define drop zone for task
+  const moveTask = useBoardDetail(state => state.moveTask);
+
+  const [ {isOver},drop] = useDrop(() => ({
+    accept: 'task',
+    drop: (monitor:any) => moveTask(monitor.id, monitor.prevColumnId, column.id),
+    collect: monitor => ({
+      isOver: monitor.isOver()
+    })
+  }), []
+  )
+
+  const style = {outline: isOver ? "1px solid white" : "none"};
+
   const deleteColumn = useBoardDetail((state:any) => state.deleteColumn);
   const onDelete = () => deleteColumn(column.id)
 
@@ -27,17 +45,21 @@ const ColumnSection = ({...column}:ColumnType) => {
         <h4 className="column-title">
           {column.name.toUpperCase()} ({tasks.length})
         </h4>
+
         <div className="btn-groups">
           <EditButton onClick={openModalEdit} />
           <DeleteButton onClick={openModalDeleteColumn} />
         </div>
+
       </div>
-      <div className="task-list">
+
+      <div className="task-list" ref={drop} style={style}>
         {tasks.map((task:TaskType) => 
-          <TaskSegment key={task.id} {...task} />
+          <TaskSegment key={task.id} columnId={column.id} {...task} />
         )}
         <PrimaryBtn OnClick={() => console.log('nothing')}>Add Task</PrimaryBtn>
       </div>
+
       <Modal showModal={showModalEdit} closeModal={closeModalEdit}>
         <ColumnForm value={value} closeModalAction={closeModalEdit} />
       </Modal>
@@ -49,6 +71,7 @@ const ColumnSection = ({...column}:ColumnType) => {
           onCancel={closeModalDeleteColumn}
         />
       </Modal>
+
     </div>
   )
 }
@@ -58,16 +81,21 @@ const BoardDetailSection = () => {
 
   return (
     <section className="board-detail">
+      <DndProvider backend={HTML5Backend}>
+
       {columns.map((column:ColumnType) => <ColumnSection key={column.id} {...column} />)}
       <button className="add-column" onClick={openModalCreateColumn}>
         + New Column
       </button>
+
       <Modal
         showModal={showModalCreateColumn}
         closeModal={closeModalCreateColumn}
       >
         <ColumnForm closeModalAction={closeModalCreateColumn}/>
       </Modal>
+      
+      </DndProvider>
     </section>
   )
 }

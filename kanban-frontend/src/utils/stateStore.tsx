@@ -31,6 +31,18 @@ export const useBoardDetail = create((set) => ({
       draft.columns.splice(columnIndex, 1)
     })
   ),
+  moveTask: (taskId, prevColumnId, targetColumnId) => set(
+    produce((draft) => {
+      // wish i could find a better approach
+      const prevColumn = draft.columns.find(column => column.id == prevColumnId);
+      const targetColumn = draft.columns.find(column => column.id == targetColumnId);
+      const task = prevColumn.tasks.find(task => task.id == taskId)
+      const taskIndex = prevColumn.tasks.findIndex(task => task.id == taskId);
+
+      prevColumn.tasks.splice(taskIndex, 1);
+      targetColumn.tasks.push(task);
+    })
+  ),
 }))
 
 // chngeboardname
