@@ -43,6 +43,15 @@ export const useBoardDetail = create((set) => ({
       targetColumn.tasks.push(task);
     })
   ),
+  changeSubTaskIsDone: (subTaskId, taskId, columnId) => set(
+    produce((draft) => {
+      // wish i could find a better approach
+      const column = draft.columns.find(column => column.id == columnId);
+      const task = column.tasks.find(task => task.id == taskId);
+      const subtask = task.subtasks.find(subtask => subtask.id == subTaskId);
+      subtask.isDone = !subtask.isDone;
+    })
+  )
 }))
 
 // chngeboardname

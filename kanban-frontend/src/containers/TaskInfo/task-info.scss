@@ -6,8 +6,21 @@
   flex-direction: column;
   gap: 1.5rem;
 
-  .task-title {
-    color: $white;
+  .task-title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+    .task-title {
+      color: $white;
+    }
+
+    .btn-groups {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
   }
 
   .task-description {

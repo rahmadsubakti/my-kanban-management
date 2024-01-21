@@ -1,15 +1,17 @@
+import { useState } from 'react';
 import { useDrag } from 'react-dnd';
 
 import TaskInfo from '@/containers/TaskInfo/TaskInfo';
 import Modal from '../Modal/Modal';
 import useModal from '@/utils/useModal';
+import { useBoardDetail } from '@/utils/stateStore';
 
 import { TaskType, SubTaskType } from '@/utils/types';
 
 import './task-segment.scss';
 
 interface ExtendedTaskType extends TaskType  {
-  columnId: String
+  columnId: string
 }
 
 const TaskSegment = ({columnId, ...task}:ExtendedTaskType) => {
@@ -45,7 +47,7 @@ const TaskSegment = ({columnId, ...task}:ExtendedTaskType) => {
       showModal={showModalTask}
       closeModal={closeModalTask}
     >
-      <TaskInfo {...task}/>
+      <TaskInfo columnId={columnId} {...task}/>
     </Modal>
     </>
   )
