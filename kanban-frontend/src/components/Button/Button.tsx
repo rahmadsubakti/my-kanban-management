@@ -1,27 +1,27 @@
-import React, { PropsWithoutRef } from "react";
+import { ComponentPropsWithoutRef } from "react";
 
 import './button.scss';
 
-type ButtonProps = {
-  typeButton?: String,
-  OnClick: Function,
-  children: any
+interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
+  typeButton?: string,
+  children: any,
 }
 
 // FIX THE GODDAMNIT BUTTON TYPE
+// Finally, found it :)
 
-const Button = ({typeButton, children, OnClick}:ButtonProps) => {
-  return <button className={`btn ${typeButton}`} onClick={OnClick}>{children}</button>
+const Button = ({typeButton, children, ...rest}:ButtonProps) => {
+  return <button className={`btn ${typeButton}`} {...rest}>{children}</button>
 }
 
-export const PrimaryBtn = ({children, OnClick}:ButtonProps) => {
-  return <Button typeButton="primary" OnClick={OnClick}>{children}</Button>
+export const PrimaryBtn = ({children, ...rest}:ButtonProps) => {
+  return <Button typeButton="primary" {...rest}>{children}</Button>
 }
 
-export const SecondaryBtn = ({children, OnClick}:ButtonProps) => {
-  return <Button typeButton="secondary" OnClick={OnClick}>{children}</Button>
+export const SecondaryBtn = ({children, ...rest}:ButtonProps) => {
+  return <Button typeButton="secondary" {...rest}>{children}</Button>
 }
 
-export const DangerBtn = ({children, OnClick}:ButtonProps) => {
-  return <Button typeButton="danger" OnClick={OnClick}>{children}</Button>
+export const DangerBtn = ({children, ...rest}:ButtonProps) => {
+  return <Button typeButton="danger" {...rest}>{children}</Button>
 }
