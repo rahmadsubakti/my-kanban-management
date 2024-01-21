@@ -1,7 +1,7 @@
 @import '/src/global-styles/colors';
 
 .modal {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   width: 100%;
@@ -13,6 +13,8 @@
 
   .modal-container {
     width: 30rem;
+    max-height: 90%;
+    overflow-y: auto;
     border-radius: .375rem;
     background-color: $dark-grey;
     padding: 2rem;
