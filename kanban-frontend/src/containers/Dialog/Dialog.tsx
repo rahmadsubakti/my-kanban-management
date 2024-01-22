@@ -1,12 +1,13 @@
 import { SecondaryBtn, DangerBtn } from "@/components/Button/Button";
 
 import './dialog.scss';
+import { MouseEventHandler } from "react";
 
 type DeleteDialog = {
   type: string,
   name: string,
-  onDelete: Function,
-  onCancel: Function,
+  onDelete: MouseEventHandler<HTMLButtonElement>,
+  onCancel: MouseEventHandler<HTMLButtonElement>,
 }
 
 const DeleteDialog = ({type, name, onDelete, onCancel}:DeleteDialog) => {
@@ -29,8 +30,8 @@ const DeleteDialog = ({type, name, onDelete, onCancel}:DeleteDialog) => {
       <h2 className="dialog-title">Delete this {type}</h2>
       <p className="dialog-msg">{msg}</p>
       <div className="btn-groups">
-        <DangerBtn OnClick={onDelete}>Delete</DangerBtn>
-        <SecondaryBtn OnClick={onCancel}>Cancel</SecondaryBtn>
+        <DangerBtn onClick={onDelete}>Delete</DangerBtn>
+        <SecondaryBtn onClick={onCancel}>Cancel</SecondaryBtn>
       </div>
     </div>
   )

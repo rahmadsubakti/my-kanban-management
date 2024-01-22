@@ -1,5 +1,9 @@
 import Checkbox from "@/components/Checkbox/Checkbox";
 import { EditButton, DeleteButton } from "@/components/IconButton/IconButton";
+import TaskForm from "@/forms/TaskForm";
+import Modal from "@/components/Modal/Modal";
+import useModal from "@/utils/useModal";
+import DeleteDialog from "../Dialog/Dialog";
 import { TaskType, SubTaskType } from "@/utils/types";
 import { useBoardDetail } from "@/utils/stateStore";
 
@@ -15,6 +19,13 @@ const TaskInfo = ({columnId, ...task}:TaskView) => {
     : 0;
 
   const totalSubTasks = task.subtasks ? task.subtasks.length : 0;
+
+  // modal for task
+  const [showModalEditTask, openModalEditTask, closeModalEditTask] = useModal();
+  const [showModalDeleteTask, openModalDeleteTask, closeModalDeleteTask] = useModal();
+
+  const deleteTask = useBoardDetail((state:any) => state.deleteTask);
+  const OnDelete = () => deleteTask(columnId, task.id);
   
   // for when you click the checkbox
   const changeSubTaskIsDone = useBoardDetail(state => state.changeSubTaskIsDone);
@@ -25,12 +36,13 @@ const TaskInfo = ({columnId, ...task}:TaskView) => {
   }
 
   return (
+    <>
     <div className="task-info-container">
       <div className="task-title-container">
         <h2 className="task-title">{task.title}</h2>
         <div className="btn-groups">
-          <EditButton title="Edit this task" />
-          <DeleteButton title="Delete this task" />
+          <EditButton title="Edit this task" onClick={openModalEditTask}/>
+          <DeleteButton title="Delete this task" onClick={openModalDeleteTask}/>
         </div>
       </div>
       <p className="task-description">{task.description}</p>
@@ -41,6 +53,29 @@ const TaskInfo = ({columnId, ...task}:TaskView) => {
         </div>
       </div>
     </div>
+    <Modal
+      showModal={showModalEditTask}
+      closeModal={closeModalEditTask}
+    >
+      <TaskForm
+        value={task}
+        columnId={columnId}
+        closeModal={closeModalEditTask}
+      />
+    </Modal>
+
+    <Modal
+      showModal={showModalDeleteTask}
+      closeModal={closeModalDeleteTask}
+    >
+      <DeleteDialog 
+        type="task" 
+        name={task.title} 
+        onDelete={OnDelete} 
+        onCancel={closeModalDeleteTask} 
+      />
+    </Modal>
+    </>
   )
 }
 

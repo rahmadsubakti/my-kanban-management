@@ -51,6 +51,29 @@ export const useBoardDetail = create((set) => ({
       const subtask = task.subtasks.find(subtask => subtask.id == subTaskId);
       subtask.isDone = !subtask.isDone;
     })
+  ),
+  addTask: (columnId, data) => set(
+    produce((draft) => {
+      const column = draft.columns.find(column => column.id == columnId);
+      column.tasks.push(data)
+    })
+  ),
+  editTask: (columnId, taskId, data) => set(
+    produce((draft) => {
+      // wish i can find a better approach so that i can update state without explicit all
+      const column = draft.columns.find(column => column.id == columnId);
+      const task = column.tasks.find(task => task.id == taskId);
+      task.title = data.title;
+      task.description = data.description;
+      task.subtasks = data.subtasks;
+    })
+  ),
+  deleteTask: (columnId, taskId) => set(
+    produce((draft) => {
+      const column = draft.columns.find(column => column.id == columnId);
+      const taskIndex = column.tasks.findIndex(task => task.id == taskId);
+      column.tasks.splice(taskIndex, 1);
+    })
   )
 }))
 

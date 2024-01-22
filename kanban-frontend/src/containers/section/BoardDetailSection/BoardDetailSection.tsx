@@ -8,6 +8,7 @@ import { EditButton, DeleteButton } from "@/components/IconButton/IconButton";
 import Modal from "@/components/Modal/Modal";
 import useModal from "@/utils/useModal";
 import ColumnForm from "@/forms/ColumnForm";
+import TaskForm from "@/forms/TaskForm";
 import DeleteDialog from "@/containers/Dialog/Dialog";
 
 import { ColumnType, TaskType } from "@/utils/types";
@@ -20,7 +21,7 @@ const ColumnSection = ({...column}:ColumnType) => {
   const value = {id: column.id, name: column.name}
 
   // define drop zone for task
-  const moveTask = useBoardDetail(state => state.moveTask);
+  const moveTask = useBoardDetail((state:any) => state.moveTask);
 
   const [ {isOver},drop] = useDrop(() => ({
     accept: 'task',
@@ -36,6 +37,7 @@ const ColumnSection = ({...column}:ColumnType) => {
   const deleteColumn = useBoardDetail((state:any) => state.deleteColumn);
   const onDelete = () => deleteColumn(column.id)
 
+  const [showModalTaskForm, openModalTaskForm, closeModalTaskForm] = useModal();
   const [showModalEdit, openModalEdit, closeModalEdit] = useModal();
   const [showModalDeleteColumn, openModalDeleteColumn, closeModalDeleteColumn] = useModal();
 
@@ -57,12 +59,17 @@ const ColumnSection = ({...column}:ColumnType) => {
         {tasks.map((task:TaskType) => 
           <TaskSegment key={task.id} columnId={column.id} {...task} />
         )}
-        <PrimaryBtn OnClick={() => console.log('nothing')}>Add Task</PrimaryBtn>
+        <PrimaryBtn onClick={openModalTaskForm}>Add Task</PrimaryBtn>
       </div>
+
+      <Modal showModal={showModalTaskForm} closeModal={closeModalTaskForm}>
+        <TaskForm columnId={column.id} closeModal={closeModalTaskForm}/>
+      </Modal>
 
       <Modal showModal={showModalEdit} closeModal={closeModalEdit}>
         <ColumnForm value={value} closeModalAction={closeModalEdit} />
       </Modal>
+
       <Modal showModal={showModalDeleteColumn} closeModal={closeModalDeleteColumn}>
         <DeleteDialog
           type='column'
