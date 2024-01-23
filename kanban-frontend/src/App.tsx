@@ -4,7 +4,6 @@ import { SideSection, MainSection } from './containers/section/Section';
 import BoardListSection from './containers/section/BoardListSection/BoardListSection';
 import Header from './containers/section/HeaderSection/Header';
 import BoardDetailSection from './containers/section/BoardDetailSection/BoardDetailSection';
-import Modal from './components/Modal/Modal';
 
 const Main = () => {
   return (
@@ -18,11 +17,13 @@ const Main = () => {
   )
 }
 
+import LoginForm from './forms/LoginForm';
+
 function App() {
 
   return (
     <>
-      <Main />
+      <LoginForm />
     </>
   )
 }
