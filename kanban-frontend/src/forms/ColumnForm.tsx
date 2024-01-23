@@ -47,6 +47,7 @@ const ColumnForm = ({value, closeModalAction}:ColumnFormType) => {
         <div className="input-groups">
           <Label>Column Name</Label>
           <TextBox
+            type="text"
             fieldName='name'
             register={register}
             properties={{required: true}}

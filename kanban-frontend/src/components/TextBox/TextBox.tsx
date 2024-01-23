@@ -1,11 +1,19 @@
-import React from 'react';
+import {ComponentPropsWithoutRef} from 'react';
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 
 import './textbox.scss';
 
-const TextBox = ({fieldName, register, properties, errors}) => {
+interface TextBoxType extends ComponentPropsWithoutRef<"input"> {
+  fieldName: string,
+  register: Function,
+  properties: any, // temporary
+  errors: any, // temporary
+}
+
+const TextBox = ({fieldName, register, properties, errors, ...rest}:TextBoxType) => {
   return (
     <div className="textbox-container">
-      <input type="text" {...register(fieldName, properties)}/>
+      <input id={fieldName} {...rest} {...register(fieldName, properties)}/>
       {errors[fieldName] && <span className="text-error">Can't be empty</span>}
     </div>
   )

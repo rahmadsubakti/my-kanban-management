@@ -20,5 +20,5 @@ export type ColumnType = {
 export type BoardType = {
   id: string,
   name: string,
-  columns?: Array<ColumnType>
+  columns?: Array<ColumnType>|any
 }

@@ -1,7 +1,9 @@
-import React from "react";
+import {ComponentPropsWithoutRef} from "react";
 import './label.scss';
 
-const Label:React.FC<React.LabelHTMLAttributes<HTMLLabelElement>> = ({children, ...rest}) => {
+interface LabelType extends ComponentPropsWithoutRef<"label"> {}
+
+const Label= ({children, ...rest}:LabelType) => {
   return <label className="Label" {...rest}>{children}</label>
 }
 

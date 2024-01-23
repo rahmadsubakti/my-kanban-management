@@ -11,7 +11,11 @@ type BoardInputs = {
   name: String
 }
 
-const BoardForm = ({value, closeModalAction}) => {
+type BoardFormType = {
+  value: any,
+  closeModalAction: Function,
+}
+const BoardForm = ({value, closeModalAction}:BoardFormType) => {
   let defaultValues;
   if (value) {
     defaultValues = value;
@@ -41,6 +45,7 @@ const BoardForm = ({value, closeModalAction}) => {
         <div className="input-groups">
           <Label>Board name</Label>
           <TextBox
+            type="text"
             fieldName='name'
             register={register}
             properties={{required: true}}

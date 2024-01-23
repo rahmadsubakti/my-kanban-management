@@ -1,10 +1,8 @@
-import { useState } from 'react';
 import { useDrag } from 'react-dnd';
 
 import TaskInfo from '@/containers/TaskInfo/TaskInfo';
 import Modal from '../Modal/Modal';
 import useModal from '@/utils/useModal';
-import { useBoardDetail } from '@/utils/stateStore';
 
 import { TaskType, SubTaskType } from '@/utils/types';
 

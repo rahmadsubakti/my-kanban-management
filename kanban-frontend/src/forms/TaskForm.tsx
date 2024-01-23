@@ -62,6 +62,7 @@ const TaskForm = ({value, columnId, closeModal}:TaskFormType) => {
         <div className="input-groups">
           <Label>Title</Label>
           <TextBox
+            type="text"
             fieldName="title"
             register={register}
             properties={{required: true}}
@@ -72,6 +73,7 @@ const TaskForm = ({value, columnId, closeModal}:TaskFormType) => {
         <div className="input-groups">
           <Label>Description</Label>
           <TextBox
+            type="text"
             fieldName="description"
             register={register}
             properties={{required: false}}
@@ -85,6 +87,7 @@ const TaskForm = ({value, columnId, closeModal}:TaskFormType) => {
             return (
               <div className="input-subtask-groups" key={field.id}>
                 <TextBox
+                  type="text"
                   fieldName={`subtasks.${index}.title`}
                   register={register}
                   properties={{required: true}}

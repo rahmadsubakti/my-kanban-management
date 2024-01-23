@@ -34,8 +34,8 @@ const Header = () => {
         <DeleteDialog
           type="board"
           name={name} 
-          delAction={() => console.log('deleted')} 
-          cancelAction={closeModalDel}
+          onDelete={() => console.log('deleted')} 
+          onCancel={closeModalDel}
         />
       </Modal>
     </header>

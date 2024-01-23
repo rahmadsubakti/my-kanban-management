@@ -6,7 +6,7 @@
   border-radius: .25rem;
   position: relative;
 
-  input[type=text] {
+  input[type=text], input[type=password] {
     background: transparent;
     border: 1px solid $lines-dark;
     padding: .5rem 7.5rem .5rem 1rem;

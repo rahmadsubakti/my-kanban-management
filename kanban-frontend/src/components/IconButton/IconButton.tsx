@@ -1,13 +1,13 @@
-import React from "react";
+import {ComponentPropsWithoutRef} from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
 
 import './icon-button.scss';
 
-interface buttonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+interface buttonProps extends ComponentPropsWithoutRef<"button"> {}
 
-export const EditButton:React.FC<buttonProps> = ({...rest}) => {
+export const EditButton = ({...rest}:buttonProps) => {
   return (
     <button className="btn-icon btn-edit" {...rest}>
       <FontAwesomeIcon icon={faPenToSquare} />
@@ -15,7 +15,7 @@ export const EditButton:React.FC<buttonProps> = ({...rest}) => {
   )
 }
 
-export const DeleteButton:React.FC<buttonProps> = ({...rest}) => {
+export const DeleteButton= ({...rest}:buttonProps) => {
   return (
     <button className="btn-icon btn-del" {...rest}>
       <FontAwesomeIcon  icon={faTrash} />
@@ -23,7 +23,7 @@ export const DeleteButton:React.FC<buttonProps> = ({...rest}) => {
   )
 }
 
-export const DeleteItemButton:React.FC<buttonProps> = ({...rest}) => {
+export const DeleteItemButton = ({...rest}:buttonProps) => {
   return (
     <button className="btn-icon btn-del-item" {...rest}>
       <FontAwesomeIcon  icon={faX} />
