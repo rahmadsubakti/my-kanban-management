@@ -15,7 +15,7 @@ class CreateTaskTest(APITestCase, LoginMixin):
         self.kwargs = {'format': 'json', 'HTTP_AUTHORIZATION': f'Token {self.key}'}
         self.url = reverse('task-create')
         self.board = Board.objects.create(name='board', user=self.user)
-        self.column = Column.objects.create(board=self.board, name='column', color='#fff')
+        self.column = Column.objects.create(board=self.board, name='column')
 
     def test_task_create_without_subtasks(self):
         data = {
@@ -90,7 +90,7 @@ class GetTaskTests(APITestCase, LoginMixin):
         self.key = self.login(**user_data)
         self.kwargs = {'format': 'json', 'HTTP_AUTHORIZATION': f'Token {self.key}'}
         self.board = Board.objects.create(name='board', user=self.user)
-        self.column = Column.objects.create(board=self.board, name='column', color='#fff')
+        self.column = Column.objects.create(board=self.board, name='column')
         self.task = Task.objects.create(column=self.column, title='task', description='task')
         self.subtask1 = SubTask.objects.create(task=self.task, title='subtask1')
         self.subtask2 = SubTask.objects.create(task=self.task, title='subtask2')
@@ -117,7 +117,7 @@ class DeleteTaskTests(APITestCase, LoginMixin):
         self.key = self.login(**user_data)
         self.kwargs = {'format': 'json', 'HTTP_AUTHORIZATION': f'Token {self.key}'}
         self.board = Board.objects.create(name='board', user=self.user)
-        self.column = Column.objects.create(board=self.board, name='column', color='#fff')
+        self.column = Column.objects.create(board=self.board, name='column')
         self.task = Task.objects.create(column=self.column, title='task', description='task')
         self.subtask1 = SubTask.objects.create(task=self.task, title='subtask1')
         self.subtask2 = SubTask.objects.create(task=self.task, title='subtask2')
@@ -142,11 +142,16 @@ class UpdateTaskTests(APITestCase, LoginMixin):
         self.key = self.login(**user_data)
         self.kwargs = {'format': 'json', 'HTTP_AUTHORIZATION': f'Token {self.key}'}
         self.board = Board.objects.create(name='board', user=self.user)
-        self.column = Column.objects.create(board=self.board, name='column', color='#fff')
+        self.column = Column.objects.create(board=self.board, name='column')
         self.task = Task.objects.create(column=self.column, title='task', description='task')
         self.subtask1 = SubTask.objects.create(task=self.task, title='subtask1')
         self.subtask2 = SubTask.objects.create(task=self.task, title='subtask2')
         self.url = reverse('task-detail', kwargs={'id': self.task.id})
+
+        self.column1 = Column.objects.create(board=self.board, name='column1')
+        self.task1 = Task.objects.create(column=self.column1, title='task1', description='task1')
+        self.subtask3 = SubTask.objects.create(task=self.task1, title='subtask3')
+        self.subtask4 = SubTask.objects.create(task=self.task1, title='subtask4')
 
         # for update
         self.data = {
@@ -189,12 +194,12 @@ class UpdateTaskTests(APITestCase, LoginMixin):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_update_task_create_new_subtask(self):
-        new_subtask = {'title': 'subtask3'}
+        new_subtask = {'title': 'new subtask'}
         self.data['subtasks'].append(new_subtask)
         response = self.client.put(self.url, data=self.data, **self.kwargs)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        subtasks = SubTask.objects.all()
+        subtasks = SubTask.objects.filter(task=self.task)
         subtasks3 = subtasks[2]
         self.assertEqual(len(subtasks), 3)
         self.assertEqual(subtasks3.title, new_subtask['title'])
@@ -205,7 +210,21 @@ class UpdateTaskTests(APITestCase, LoginMixin):
         response = self.client.put(self.url, data=self.data, **self.kwargs)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        subtasks = SubTask.objects.all()
+        subtasks = SubTask.objects.filter(task=self.task)
         subtask1 = subtasks[0]
         self.assertEqual(len(subtasks), 1)
         self.assertTrue(subtask1.is_done)
+
+    def test_update_move_task_to_another_column(self):
+        """
+        This will test if moving task to another column does not cause side effect (all subtasks are deleted other than the moved task)
+        """
+        self.data['column'] = self.column1.id
+        response = self.client.put(self.url, data=self.data, **self.kwargs)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        task = Task.objects.get(id=self.task.id)
+        self.assertEqual(task.column.id, self.column1.id)
+
+        task1 = Task.objects.get(id=self.task1.id)
+        self.assertTrue(len(task1.subtasks.all()) != 0)

@@ -51,9 +51,11 @@ INSTALLED_APPS = [
     'kanban',
     'registration',
     'jobs',
+    'corsheaders',
 ] # add corsheaders later
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,9 +66,10 @@ MIDDLEWARE = [
     
 ] #'corsheaders.middleware.CorsMiddleware'
 
-#CORS_ALLOWED_ORIGINS = [
-#    'http://localhost:8000'
-#]
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8000',
+    'http://localhost:5173',
+]
 
 ROOT_URLCONF = 'kanban_management.urls'
 

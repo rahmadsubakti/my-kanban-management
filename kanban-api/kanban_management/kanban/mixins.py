@@ -66,7 +66,9 @@ class SubUpdateMixin:
 
         if subs_data:
             main_id = main_serializer.data.get('id')
-            sub_queryset = self.sub_model.objects.all()
+            #sub_queryset = self.sub_model.objects.all()
+            filter_kwargs = {self.main_rel_field: main_instance}
+            sub_queryset = self.sub_model.objects.filter(**filter_kwargs)
             sub_queryset_mapping = {sub.id: sub for sub in sub_queryset}
             sub_data_mapping = {}
             for i in range(len(subs_data)):

@@ -29,7 +29,7 @@ class Task(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     column = models.ForeignKey(Column, on_delete=models.CASCADE, related_name='tasks')
     title = models.CharField(max_length=60)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     status = models.CharField(choices=status_choices, max_length=5, default='todo')
 
     def __str__(self):
