@@ -4,6 +4,7 @@ import Label from "@/components/Label/Label";
 import TextBox from "@/components/TextBox/TextBox";
 import { PrimaryBtn } from "@/components/Button/Button";
 import { useBoardDetail } from "@/utils/stateStore";
+import { sendBoardEdit } from "@/utils/request";
 
 import './form.scss';
 
@@ -31,7 +32,7 @@ const BoardForm = ({value, closeModalAction}:BoardFormType) => {
   const onSubmit:SubmitHandler<BoardInputs> = data => {
     if (value) {
       // change board name
-      editBoard(data.name);
+      sendBoardEdit(value.id, data).then(res => editBoard(data.name));
     } else {
       // create new board
     }

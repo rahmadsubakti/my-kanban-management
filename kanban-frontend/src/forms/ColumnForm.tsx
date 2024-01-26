@@ -5,6 +5,7 @@ import TextBox from "@/components/TextBox/TextBox";
 import { PrimaryBtn } from "@/components/Button/Button";
 
 import { useBoardDetail } from "@/utils/stateStore";
+import { sendColumnAdd, sendColumnEdit } from "@/utils/request";
 
 import './form.scss';
 
@@ -18,6 +19,7 @@ type ColumnFormType = {
 }
 
 const ColumnForm = ({value, closeModalAction}:ColumnFormType) => {
+  const boardId = useBoardDetail((state:any) => state.id);
   const addColumn = useBoardDetail((state:any) => state.addColumn)
   const editColumn = useBoardDetail((state:any) => state.editColumn);
   
@@ -32,10 +34,13 @@ const ColumnForm = ({value, closeModalAction}:ColumnFormType) => {
   const onSubmit:SubmitHandler<ColumnInput> = data => {
     if (value) {
       // edit column
-      editColumn(value.id, data.name)
+      data.board = boardId;
+      sendColumnEdit(value.id, data).then(res => editColumn(value.id, data.name))
+      //editColumn(value.id, data.name)
     } else {
       // create new column
-      addColumn(Math.random().toString(), data.name)
+      data.board = boardId;
+      sendColumnAdd(data).then(res => addColumn(res.data.id, data.name))
     }
     closeModalAction();
   }

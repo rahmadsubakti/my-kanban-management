@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import {IconLink, CustomLink} from "@/components/CustomLink/CustomLink";
 
 import { useBoardList } from "@/utils/stateStore";
@@ -6,7 +8,11 @@ import { BoardType } from "@/utils/types";
 import './board-list-section.scss';
 
 const BoardListSection = () => {
-  const boards = useBoardList((state:any) => state.boards)
+  const {boards, setBoards} = useBoardList();
+
+  useEffect(() => {
+    setBoards();
+  }, [])
 
   return (
     <div className="board-list-containers">

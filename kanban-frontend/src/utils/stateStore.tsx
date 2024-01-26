@@ -3,10 +3,12 @@ import { produce } from "immer";
 import { mountStoreDevtool } from "simple-zustand-devtools";
 
 import { BoardType, ColumnType, TaskType, SubTaskType } from "./types";
+import { fetchBoardDetail } from "./request";
 
 import dummyData from "./dummyData";
 
 type Actions = {
+  getBoardDetail: (id:string) => void
   editBoard: (name:string) => void,
   addColumn: (id:string, name:string) => void,
   editColumn: (id:string, name:string) => void,
@@ -19,9 +21,17 @@ type Actions = {
 } 
 
 export const useBoardDetail = create<BoardType & Actions>((set) => ({
-  id: dummyData.id,
-  name: dummyData.name,
-  columns: dummyData.columns,
+  id: '',
+  name: '',
+  columns: [],
+  getBoardDetail: (id) => {
+    fetchBoardDetail(id)
+      .then(res => set({
+        id: res.id,
+        name: res.name,
+        columns: res.columns
+      }))
+  },
   editBoard: name => set({name: name}),
   addColumn: (id, name) => set(
     produce((draft) => {
@@ -61,7 +71,7 @@ export const useBoardDetail = create<BoardType & Actions>((set) => ({
       const column = draft.columns.find((column:ColumnType) => column.id == columnId);
       const task = column.tasks.find((task:TaskType) => task.id == taskId);
       const subtask = task.subtasks.find((subtask:SubTaskType) => subtask.id == subTaskId);
-      subtask.isDone = !subtask.isDone;
+      subtask.is_done = !subtask.is_done;
     })
   ),
   addTask: (columnId, data) => set(
@@ -89,26 +99,21 @@ export const useBoardDetail = create<BoardType & Actions>((set) => ({
   )
 }))
 
-// chngeboardname
-// createcolumn
-// edit column
-// delete column
-// add task
-// edit task
-// change task's column
-// delete task
-// add subtask
-// edit subtask
-// del subtask
+import { fetchBoardList } from "./request";
 
-const boards = [
-  {id: Math.random().toString(), name: 'Platform Launch'},
-  {id: Math.random().toString(), name: 'Marketing Plan'},
-  {id: Math.random().toString(), name: 'Sleeping'}
-]
+type BoardListState = {
+  boards: Array<any>,
+}
 
-export const useBoardList = create((set) => ({
-  boards: boards
+type BoardListAction = {
+  setBoards: () => void,
+}
+
+export const useBoardList = create<BoardListState & BoardListAction>((set) => ({
+  boards: [],
+  setBoards: () =>  {
+    fetchBoardList().then(res => set({boards: res}))
+  }
 }));
 
 if (import.meta.env.DEV) {

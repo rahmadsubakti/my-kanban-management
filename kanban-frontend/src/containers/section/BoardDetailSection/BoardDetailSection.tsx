@@ -12,6 +12,8 @@ import TaskForm from "@/forms/TaskForm";
 import DeleteDialog from "@/containers/Dialog/Dialog";
 
 import { ColumnType, TaskType } from "@/utils/types";
+import { sendColumnDelete } from "@/utils/request";
+import { sendTaskMove } from "@/utils/request";
 
 import './board-detail-section.scss';
 import { PrimaryBtn } from "@/components/Button/Button";
@@ -25,7 +27,9 @@ const ColumnSection = ({...column}:ColumnType) => {
 
   const [ {isOver},drop] = useDrop(() => ({
     accept: 'task',
-    drop: (monitor:any) => moveTask(monitor.id, monitor.prevColumnId, column.id),
+    drop: (monitor:any) => 
+      sendTaskMove(column.id, monitor.task)
+        .then(() => moveTask(monitor.task.id, monitor.prevColumnId, column.id)),
     collect: monitor => ({
       isOver: monitor.isOver()
     })
@@ -35,7 +39,7 @@ const ColumnSection = ({...column}:ColumnType) => {
   const style = {outline: isOver ? "1px solid white" : "none"};
 
   const deleteColumn = useBoardDetail((state:any) => state.deleteColumn);
-  const onDelete = () => deleteColumn(column.id)
+  const onDelete = () => sendColumnDelete(column.id).then(res => deleteColumn(column.id));
 
   const [showModalTaskForm, openModalTaskForm, closeModalTaskForm] = useModal();
   const [showModalEdit, openModalEdit, closeModalEdit] = useModal();

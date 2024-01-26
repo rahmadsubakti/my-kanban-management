@@ -6,6 +6,7 @@ import useModal from "@/utils/useModal";
 import DeleteDialog from "../Dialog/Dialog";
 import { TaskType, SubTaskType } from "@/utils/types";
 import { useBoardDetail } from "@/utils/stateStore";
+import { sendTaskDelete } from "@/utils/request";
 
 import './task-info.scss';
 
@@ -15,7 +16,7 @@ interface TaskView extends TaskType {
 
 const TaskInfo = ({columnId, ...task}:TaskView) => {
   const numSubTasksDone = task.subtasks 
-    ? task.subtasks.filter((subtask:SubTaskType) => subtask.isDone == true).length 
+    ? task.subtasks.filter((subtask:SubTaskType) => subtask.is_done == true).length 
     : 0;
 
   const totalSubTasks = task.subtasks ? task.subtasks.length : 0;
@@ -25,7 +26,8 @@ const TaskInfo = ({columnId, ...task}:TaskView) => {
   const [showModalDeleteTask, openModalDeleteTask, closeModalDeleteTask] = useModal();
 
   const deleteTask = useBoardDetail((state:any) => state.deleteTask);
-  const OnDelete = () => deleteTask(columnId, task.id);
+  const OnDelete = () => 
+    sendTaskDelete(task.id).then(() => deleteTask(columnId, task.id));
   
   // for when you click the checkbox
   const changeSubTaskIsDone = useBoardDetail(state => state.changeSubTaskIsDone);
@@ -49,7 +51,7 @@ const TaskInfo = ({columnId, ...task}:TaskView) => {
       <div className="subtasks-container">
         <h5 className="subtask-info">Subtasks ( {numSubTasksDone} of {totalSubTasks})</h5>
         <div className="subtasks">
-          {task.subtasks?.map(subtask => <Checkbox key={subtask.id} checked={subtask.isDone} onChange={OnChange} value={subtask.id}>{subtask.title}</Checkbox>)}
+          {task.subtasks?.map(subtask => <Checkbox key={subtask.id} checked={subtask.is_done} onChange={OnChange} value={subtask.id}>{subtask.title}</Checkbox>)}
         </div>
       </div>
     </div>

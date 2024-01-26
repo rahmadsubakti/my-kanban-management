@@ -5,6 +5,7 @@ import TextBox from "@/components/TextBox/TextBox";
 import { DeleteItemButton } from "@/components/IconButton/IconButton";
 import { PrimaryBtn, SecondaryBtn } from "@/components/Button/Button";
 import { useBoardDetail } from '@/utils/stateStore';
+import { sendTaskAdd, sendTaskEdit } from '@/utils/request';
 
 import './form.scss';
 
@@ -46,10 +47,11 @@ const TaskForm = ({value, columnId, closeModal}:TaskFormType) => {
     // send first to server
     // then get new id from the response
     if (value) {
-      editTask(columnId, value.id, data);
+      sendTaskEdit(value.id, data).then(res => editTask(columnId, value.id, res.data))
+      //editTask(columnId, value.id, data);
     } else {
-      data.id = Math.random().toString() //change later
-      addTask(columnId, data)
+      sendTaskAdd(columnId, data).then(res => addTask(columnId, res.data))
+      //addTask(columnId, data)
     }
     closeModal();
   };

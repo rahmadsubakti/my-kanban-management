@@ -8,7 +8,7 @@ import DeleteDialog from "@/containers/Dialog/Dialog";
 import './header.scss';
 
 const Header = () => {
-  const name = useBoardDetail((state:any) => state.name)
+  const {id, name} = useBoardDetail();
   const [showModalEdit, openModalEdit, closeModalEdit] = useModal();
   const [showModalDel, openModalDel, closeModalDel] = useModal();
 
@@ -28,7 +28,7 @@ const Header = () => {
         </div>
       </div>
       <Modal showModal={showModalEdit} closeModal={closeModalEdit}>
-        <BoardForm value={{name: name}} closeModalAction={closeModalEdit} />
+        <BoardForm value={{id:id, name: name}} closeModalAction={closeModalEdit} />
       </Modal>
       <Modal showModal={showModalDel} closeModal={closeModalDel}>
         <DeleteDialog

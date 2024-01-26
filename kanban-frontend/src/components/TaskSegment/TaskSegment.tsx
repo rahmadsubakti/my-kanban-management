@@ -1,10 +1,13 @@
+import { useRef } from 'react';
 import { useDrag } from 'react-dnd';
 
 import TaskInfo from '@/containers/TaskInfo/TaskInfo';
 import Modal from '../Modal/Modal';
 import useModal from '@/utils/useModal';
+import { useBoardDetail } from '@/utils/stateStore';
 
 import { TaskType, SubTaskType } from '@/utils/types';
+import { sendTaskEdit } from '@/utils/request';
 
 import './task-segment.scss';
 
@@ -14,17 +17,34 @@ interface ExtendedTaskType extends TaskType  {
 
 const TaskSegment = ({columnId, ...task}:ExtendedTaskType) => {
   const numSubTasksDone = task.subtasks 
-    ? task.subtasks.filter((subtask:SubTaskType) => subtask.isDone == true).length 
+    ? task.subtasks.filter((subtask:SubTaskType) => subtask.is_done == true).length 
     : 0;
 
   const totalSubTasks = task.subtasks ? task.subtasks.length : 0;
 
+  const subtasksRef = useRef()
+  const state = useBoardDetail.getState()
+
   const [showModalTask, openModalTask, closeModalTask] = useModal();
+  const onOpenModalTask = () => {
+    const currentSubtasks = state.columns.find(column => column.id == columnId).tasks.find(taskObj => taskObj.id == task.id).subtasks;
+    subtasksRef.current = currentSubtasks;
+    openModalTask()
+  }
+  const onCloseModalTask = () => {
+    const taskState = state.columns.find(column => column.id == columnId).tasks.find(taskObj => taskObj.id == task.id);
+    const currentSubtasks = task.subtasks;
+    const isSubTasksUpdated = JSON.stringify(currentSubtasks) != JSON.stringify(subtasksRef.current)
+    if (isSubTasksUpdated) {
+      sendTaskEdit(taskState.id, taskState);
+    }
+    closeModalTask();
+  }
 
   // define drag item
   const [{isDragging}, drag] = useDrag(() => ({
     type: 'task',
-    item: {'id': task.id, 'prevColumnId': columnId},
+    item: {'prevColumnId': columnId, 'task': task},
     collect: (monitor) => ({
       item: monitor.getItem(),
       isDragging: monitor.isDragging()
@@ -35,7 +55,7 @@ const TaskSegment = ({columnId, ...task}:ExtendedTaskType) => {
 
   return (
     <>
-    <div className="task-segment" ref={drag} style={style} onClick={openModalTask}>
+    <div className="task-segment" ref={drag} style={style} onClick={onOpenModalTask}>
       <h3>{task.title}</h3>
       <p className='subtask-num'>
         {numSubTasksDone} of {totalSubTasks} subtasks
@@ -43,7 +63,7 @@ const TaskSegment = ({columnId, ...task}:ExtendedTaskType) => {
     </div>
     <Modal
       showModal={showModalTask}
-      closeModal={closeModalTask}
+      closeModal={onCloseModalTask}
     >
       <TaskInfo columnId={columnId} {...task}/>
     </Modal>
