@@ -1,8 +1,12 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
+import Cookies from 'js-cookie';
 
 import Label from "@/components/Label/Label";
 import TextBox from "@/components/TextBox/TextBox";
 import { PrimaryBtn } from "@/components/Button/Button";
+
+import { loginRequest } from '@/utils/request';
+import router from '@/utils/route';
 
 import './form.scss';
 import './auth.scss';
@@ -15,13 +19,17 @@ type LoginInput = {
 const LoginForm = () => {
   const { register, handleSubmit, formState: {errors} } = useForm<LoginInput>();
 
-  const OnSubmit:SubmitHandler<LoginInput> = data => console.log(data);
+  const OnSubmit:SubmitHandler<LoginInput> = data => {
+    loginRequest(data)
+      .then(res => Cookies.set('token', res.data.key))
+      .then(res => router.history.push('/'))
+  };
 
   return (
     <div className="auth-container">
       <div className="auth-content">
       <div className="form-container">
-      <form>
+      <form onSubmit={handleSubmit(OnSubmit)}>
 
         <div className="input-groups">
           <Label>Username</Label>

@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 let mainUrl:any;
 let user_token;
@@ -6,13 +7,19 @@ let config:any;
 
 if (import.meta.env.DEV) {
   mainUrl = 'http://localhost:8000/api/';
-  user_token = '5e54fb5eb1ff4c80b24f0b1876f0e79a90237f50';
+  user_token = Cookies.get('token');
   config = {
     'headers' : {
     'Content-Type': 'application/json',
     'Authorization': `Token ${user_token}`
       }
   }
+}
+
+export const loginRequest = async (data) => {
+  const url = mainUrl + 'auth/login/';
+  const response = await axios.post(url, data, config);
+  return response;
 }
 
 export const fetchBoardList = async () => {

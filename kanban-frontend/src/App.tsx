@@ -18,13 +18,13 @@ const Main = () => {
 }
 
 import LoginForm from './forms/LoginForm';
+import router from './utils/route';
+import { RouterProvider } from '@tanstack/react-router';
 
 function App() {
 
   return (
-    <>
-      <Main />
-    </>
+    <RouterProvider router={router} />
   )
 }
 
