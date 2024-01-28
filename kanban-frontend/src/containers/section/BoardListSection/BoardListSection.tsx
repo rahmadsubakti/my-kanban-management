@@ -19,7 +19,7 @@ const BoardListSection = () => {
       <h4 className="num-boards">ALL BOARDS ({boards.length})</h4>
       <div className="board-list">
         {boards.map((board:BoardType) => 
-          <CustomLink key={board.id}>{board.name}</CustomLink>
+          <CustomLink key={board.id} href={`/board/${board.id}`}>{board.name}</CustomLink>
         )}
       </div>
       

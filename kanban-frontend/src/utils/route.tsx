@@ -15,14 +15,12 @@ import BoardListSection from '@/containers/section/BoardListSection/BoardListSec
 import BoardDetailSection from '@/containers/section/BoardDetailSection/BoardDetailSection';
 import Header from '@/containers/section/HeaderSection/Header';
 
+
 const Main = () => {
   return (
     <main>
       <SideSection><BoardListSection /></SideSection>
-      <MainSection>
-        <Header />
-        <BoardDetailSection />
-      </MainSection>
+      <Outlet />
     </main>
   )
 }
@@ -67,7 +65,21 @@ const MainRoute = createRoute({
   component: Main
 })
 
-const routeTree = rootRoute.addChildren([LoginFormRoute, MainRoute]);
+export const BoardDetailRoute = createRoute({
+  getParentRoute: () => MainRoute,
+  path: 'board/$boardId',
+  loader: ({params}) => params.boardId,
+  component: () => {
+    return (
+      <MainSection>
+        <Header />
+        <BoardDetailSection />
+      </MainSection>
+    )
+  }
+})
+
+const routeTree = rootRoute.addChildren([LoginFormRoute, MainRoute.addChildren([BoardDetailRoute])]);
 
 const router = createRouter({routeTree});
 

@@ -20,6 +20,7 @@ const LoginForm = () => {
   const { register, handleSubmit, formState: {errors} } = useForm<LoginInput>();
 
   const OnSubmit:SubmitHandler<LoginInput> = data => {
+    console.log(data)
     loginRequest(data)
       .then(res => Cookies.set('token', res.data.key))
       .then(res => router.history.push('/'))

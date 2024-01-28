@@ -25,12 +25,14 @@ export const useBoardDetail = create<BoardType & Actions>((set) => ({
   name: '',
   columns: [],
   getBoardDetail: (id) => {
-    fetchBoardDetail(id)
-      .then(res => set({
-        id: res.id,
-        name: res.name,
-        columns: res.columns
-      }))
+    if (id != "") {
+      fetchBoardDetail(id)
+        .then(res => set({
+          id: res.id,
+          name: res.name,
+          columns: res.columns
+        }))
+    }
   },
   editBoard: name => set({name: name}),
   addColumn: (id, name) => set(
