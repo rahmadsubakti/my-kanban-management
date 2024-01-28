@@ -19,8 +19,8 @@ const ModalContainer = ({closeModal, children}: ModalContainerType) => {
         }
       }
     }
-    document.addEventListener('click', clickOutside);
-    return () => document.removeEventListener('click', clickOutside);
+    document.addEventListener('mousedown', clickOutside);
+    return () => document.removeEventListener('mousedown', clickOutside);
   }, [closeModal])
 
   return (
