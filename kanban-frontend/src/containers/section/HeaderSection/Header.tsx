@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 
-import { useBoardDetail } from "@/utils/stateStore";
+import { useBoardList, useBoardDetail } from "@/utils/stateStore";
 import useModal from "@/utils/useModal";
+import { sendBoardDelete } from "@/utils/request";
+import router from "@/utils/route";
 import { EditButton, DeleteButton } from "@/components/IconButton/IconButton";
 import Modal from "@/components/Modal/Modal";
 import BoardForm from "@/forms/BoardForm";
@@ -12,6 +14,14 @@ import "./header.scss";
 const HeaderContent = ({ id, name }) => {
   const [showModalEdit, openModalEdit, closeModalEdit] = useModal();
   const [showModalDel, openModalDel, closeModalDel] = useModal();
+
+  const { deleteBoard } = useBoardList();
+  //const { resetBoard } = useBoardDetail();
+  const OnDelete = async (id) => {
+    const response = await sendBoardDelete(id);
+    deleteBoard(id);
+    router.history.push('/');
+  }
 
   return (
     <>
@@ -32,7 +42,7 @@ const HeaderContent = ({ id, name }) => {
         <DeleteDialog
           type="board"
           name={name}
-          onDelete={() => console.log("deleted")}
+          onDelete={() => OnDelete(id)}
           onCancel={closeModalDel}
         />
       </Modal>

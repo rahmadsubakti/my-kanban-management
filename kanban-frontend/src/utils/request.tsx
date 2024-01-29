@@ -50,6 +50,13 @@ export const fetchBoardDetail = async (id) => {
   return await response.data;
 }
 
+export const sendBoardAdd = async (data) => {
+  const config = generateConfig(true);
+  const url = mainUrl + 'board/create'
+  const response = await axios.post(url, data, config);
+  return response;
+}
+
 export const sendBoardEdit = async (id, data) => {
   const config = generateConfig(true)
   const url = mainUrl + `board/${id}`;
@@ -57,7 +64,12 @@ export const sendBoardEdit = async (id, data) => {
   return await response
 }
 
-// sendBoardDelete
+export const sendBoardDelete = async (id) => {
+  const config = generateConfig(true);
+  const url = mainUrl + `board/${id}`;
+  const response = await axios.delete(url, config);
+  return response;
+}
 
 export const sendColumnAdd = async (data) => {
   const config = generateConfig(true)

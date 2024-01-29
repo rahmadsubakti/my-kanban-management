@@ -5,11 +5,10 @@ import { mountStoreDevtool } from "simple-zustand-devtools";
 import { BoardType, ColumnType, TaskType, SubTaskType } from "./types";
 import { fetchBoardDetail } from "./request";
 
-import dummyData from "./dummyData";
-
 type Actions = {
   getBoardDetail: (id:string) => void
   editBoard: (name:string) => void,
+  resetBoard: () => void,
   addColumn: (id:string, name:string) => void,
   editColumn: (id:string, name:string) => void,
   deleteColumn: (id:string) => void,
@@ -20,10 +19,14 @@ type Actions = {
   deleteTask: (columnId:string, taskId:string) => void,
 } 
 
-export const useBoardDetail = create<BoardType & Actions>((set) => ({
+const initialState : BoardType = {
   id: '',
   name: '',
-  columns: [],
+  columns: []
+}
+
+export const useBoardDetail = create<BoardType & Actions>((set) => ({
+  ...initialState,
   getBoardDetail: (id) => {
     if (id != "") {
       fetchBoardDetail(id)
@@ -35,6 +38,7 @@ export const useBoardDetail = create<BoardType & Actions>((set) => ({
     }
   },
   editBoard: name => set({name: name}),
+  resetBoard: () => set(initialState),
   addColumn: (id, name) => set(
     produce((draft) => {
       const column = {id: id, name: name, tasks: []};
@@ -109,13 +113,27 @@ type BoardListState = {
 
 type BoardListAction = {
   setBoards: () => void,
+  addBoard: (id:string, name:string) => void,
+  deleteBoard: (id:string) => void,
 }
 
 export const useBoardList = create<BoardListState & BoardListAction>((set) => ({
   boards: [],
   setBoards: () =>  {
     fetchBoardList().then(res => set({boards: res}))
-  }
+  },
+  addBoard: (id, name) => set(
+    produce((draft) => {
+      const newBoard = {id: id, name: name};
+      draft.boards.push(newBoard)
+    })
+  ),
+  deleteBoard: (id) => set(
+    produce((draft) => {
+      const targetBoardIndex = draft.boards.findIndex((board:BoardType) => board.id == id);
+      draft.boards.splice(targetBoardIndex, 1);
+    })
+  )
 }));
 
 if (import.meta.env.DEV) {

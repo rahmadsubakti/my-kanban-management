@@ -3,17 +3,18 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import Label from "@/components/Label/Label";
 import TextBox from "@/components/TextBox/TextBox";
 import { PrimaryBtn } from "@/components/Button/Button";
-import { useBoardDetail } from "@/utils/stateStore";
-import { sendBoardEdit } from "@/utils/request";
+import { useBoardList, useBoardDetail } from "@/utils/stateStore";
+import { sendBoardAdd, sendBoardEdit } from "@/utils/request";
+import router from "@/utils/route";
 
 import './form.scss';
 
 type BoardInputs = {
-  name: String
+  name: string
 }
 
 type BoardFormType = {
-  value: any,
+  value?: any,
   closeModalAction: Function,
 }
 const BoardForm = ({value, closeModalAction}:BoardFormType) => {
@@ -24,17 +25,26 @@ const BoardForm = ({value, closeModalAction}:BoardFormType) => {
     defaultValues = '';
   }
 
-  const editBoard = useBoardDetail((state:any) => state.editBoard);
+  const { editBoard } = useBoardDetail();
+  const { addBoard } = useBoardList();
 
   const { register, handleSubmit, formState: {errors}} = 
     useForm<BoardInputs>({defaultValues: defaultValues});
 
+  const AddBoard = async (data:BoardInputs) => {
+    const res = await sendBoardAdd(data);
+    addBoard(res.data.id, res.data.name);
+    router.history.push(`board/${res.data.id}`);
+  }
+
   const onSubmit:SubmitHandler<BoardInputs> = data => {
     if (value) {
       // change board name
-      sendBoardEdit(value.id, data).then(res => editBoard(data.name));
+      sendBoardEdit(value.id, data).then(() => editBoard(data.name));
     } else {
       // create new board
+      // sendBoardAdd(data).then(res => router.history.push(`board/${res.data.id}`))
+      AddBoard(data);
     }
     closeModalAction();
   };

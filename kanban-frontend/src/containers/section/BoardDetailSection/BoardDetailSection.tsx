@@ -18,6 +18,26 @@ import { sendTaskMove } from "@/utils/request";
 import "./board-detail-section.scss";
 import { PrimaryBtn } from "@/components/Button/Button";
 
+const EmptyColumn = () => {
+  const [showModalCreateColumn, openModalCreateColumn, closeModalCreateColumn] = useModal();
+
+  return (
+    <div className="empty-column-container">
+      <h2 className="empty-column-title">
+        This board is empty. Create a new column to get started
+      </h2>
+      <PrimaryBtn onClick={openModalCreateColumn}>+ Add New Column</PrimaryBtn>
+
+      <Modal
+        showModal={showModalCreateColumn}
+        closeModal={closeModalCreateColumn}
+      >
+        <ColumnForm closeModalAction={closeModalCreateColumn} />
+      </Modal>
+    </div>
+  )
+}
+
 const ColumnSection = ({ ...column }: ColumnType) => {
   const tasks = column.tasks ? column.tasks : [];
   const value = { id: column.id, name: column.name };
@@ -43,7 +63,7 @@ const ColumnSection = ({ ...column }: ColumnType) => {
 
   const deleteColumn = useBoardDetail((state: any) => state.deleteColumn);
   const onDelete = () =>
-    sendColumnDelete(column.id).then((res) => deleteColumn(column.id));
+    sendColumnDelete(column.id).then(() => deleteColumn(column.id));
 
   const [showModalTaskForm, openModalTaskForm, closeModalTaskForm] = useModal();
   const [showModalEdit, openModalEdit, closeModalEdit] = useModal();
@@ -96,6 +116,10 @@ const ColumnSection = ({ ...column }: ColumnType) => {
 const BoardDetailContent = () => {
   const columns = useBoardDetail((state: any) => state.columns);
   const [showModalCreateColumn, openModalCreateColumn, closeModalCreateColumn] = useModal();
+
+  if (columns.length == 0) {
+    return <EmptyColumn />
+  }
 
   return (
     <>
