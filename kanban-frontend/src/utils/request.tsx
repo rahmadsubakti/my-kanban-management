@@ -29,11 +29,32 @@ const generateConfig = (isLogin=false) => {
   return config;
 }
 
+export const RegisterRequest = async (data) => {
+  const config = generateConfig();
+  const url = mainUrl + 'auth/register/';
+  const response = await axios.post(url, data, config);
+  return response;
+}
+
 export const loginRequest = async (data) => {
   const config = generateConfig()
   const url = mainUrl + 'auth/login/';
   const response = await axios.post(url, data, config);
   return response;
+}
+
+export const getUserInfoRequest = async () => {
+  const config = generateConfig(true);
+  const url = mainUrl + 'auth/user/'
+  const response = await axios.get(url, config);
+  return response;
+}
+
+export const logoutRequest = async () => {
+  const config = generateConfig(true);
+  const url = mainUrl + 'auth/logout/';
+  const response = await axios.post(url, config);
+  return response
 }
 
 export const fetchBoardList = async () => {

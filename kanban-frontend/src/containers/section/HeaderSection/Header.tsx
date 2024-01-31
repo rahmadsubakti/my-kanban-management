@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 
 import { useBoardList, useBoardDetail } from "@/utils/stateStore";
 import useModal from "@/utils/useModal";
-import { sendBoardDelete } from "@/utils/request";
+import { getUserInfoRequest, logoutRequest, sendBoardDelete } from "@/utils/request";
 import router from "@/utils/route";
 import { EditButton, DeleteButton } from "@/components/IconButton/IconButton";
 import Modal from "@/components/Modal/Modal";
@@ -50,21 +51,38 @@ const HeaderContent = ({ id, name }) => {
   );
 };
 
+const UserInfo = () => {
+  const [userName, setUserName] = useState('')
+
+  useEffect(() => {
+    getUserInfoRequest()
+      .then(res => setUserName(res.data.username))
+  })
+
+  const onLogout = () => {
+    logoutRequest()
+      .then(() => Cookies.remove('token'))
+      .then(() => router.history.push('/'))
+  }
+  return (
+    <div className="user-info">
+      <h4>Hi, {userName}</h4>
+      <button className="logout-btn" onClick={onLogout}>Logout</button>
+    </div>
+  )
+}
+
 const Header = () => {
   const { id, name } = useBoardDetail();
-
+  
   useEffect(() => {
     document.title = name;
   }, [name])
   
   return (
     <header>
-      {id != ""
-        ?
-          <HeaderContent id={id} name={name} />
-        :
-          <h1>Select board</h1>
-      }
+      {id && <HeaderContent id={id} name={name} />}
+      <UserInfo />
     </header>
   );
 };

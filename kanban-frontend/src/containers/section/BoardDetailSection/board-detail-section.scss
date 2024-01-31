@@ -2,12 +2,16 @@
 @import '/src/global-styles/typography';
 
 .board-detail {
+  max-width: calc(100vw - 300px);
+  max-height: calc(100vh - 94px);
   padding: 1.5rem;
-  display: flex;
-  gap: 1.5rem;
+  white-space: nowrap;
+  overflow: scroll;
 
   .column {
+    display: inline-block;
     width: 280px;
+    margin-right: 1.5rem;
 
     .column-title-container {
       display: flex;
@@ -42,3 +46,26 @@
     color: $medium-grey;
   }
 }
+
+.empty-column-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 2rem;
+  
+  .empty-column-title {
+    color: $medium-grey;
+  }
+}
+
+/*
+.board-detail {
+    max-width: calc(100vw - 300px);
+    min-height: calc(100vh - 94px);
+    padding: 1.5rem;
+    white-space: nowrap;
+    overflow: scroll;
+}
+
+*/

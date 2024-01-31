@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useDrop } from "react-dnd";
@@ -6,17 +8,18 @@ import { useBoardDetail } from "@/utils/stateStore";
 import TaskSegment from "@/components/TaskSegment/TaskSegment";
 import { EditButton, DeleteButton } from "@/components/IconButton/IconButton";
 import Modal from "@/components/Modal/Modal";
+import { PrimaryBtn } from "@/components/Button/Button";
 import useModal from "@/utils/useModal";
 import ColumnForm from "@/forms/ColumnForm";
 import TaskForm from "@/forms/TaskForm";
 import DeleteDialog from "@/containers/Dialog/Dialog";
+import { BoardDetailRoute } from "@/utils/route";
 
 import { ColumnType, TaskType } from "@/utils/types";
 import { sendColumnDelete } from "@/utils/request";
 import { sendTaskMove } from "@/utils/request";
 
 import "./board-detail-section.scss";
-import { PrimaryBtn } from "@/components/Button/Button";
 
 const EmptyColumn = () => {
   const [showModalCreateColumn, openModalCreateColumn, closeModalCreateColumn] = useModal();
@@ -144,16 +147,23 @@ const BoardDetailContent = () => {
 };
 
 const BoardDetailSection = () => {
-  const { id } = useBoardDetail();
+  const { id, getBoardDetail, resetBoard } = useBoardDetail();
+  const boardId = BoardDetailRoute.useLoaderData();
+
+  useEffect(() => {
+    getBoardDetail(boardId);
+    return () => resetBoard();
+  }, [boardId])
 
   return (
     <section className="board-detail">
-      {id != ""
+      <BoardDetailContent />
+      {/*id != ""
         ?
           <BoardDetailContent />
         :
           <h1>Select Board</h1>
-      }
+  */}
     </section>
   );
 };

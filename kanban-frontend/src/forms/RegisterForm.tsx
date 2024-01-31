@@ -1,33 +1,30 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Link } from "@tanstack/react-router";
-import Cookies from "js-cookie";
 
-import Label from "@/components/Label/Label";
 import TextBox from "@/components/TextBox/TextBox";
+import Label from "@/components/Label/Label";
 import { PrimaryBtn } from "@/components/Button/Button";
 
-import { loginRequest } from "@/utils/request";
+import { RegisterRequest } from "@/utils/request";
 import router from "@/utils/route";
 
 import "./form.scss";
 import "./auth.scss";
 
-type LoginInput = {
+type RegisterInput = {
   username: string;
-  password: string;
+  password1: string;
+  password2: string;
 };
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginInput>();
+  } = useForm<RegisterInput>();
 
-  const OnSubmit: SubmitHandler<LoginInput> = (data) => {
-    loginRequest(data)
-      .then((res) => Cookies.set("token", res.data.key))
-      .then(() => router.history.push("/"));
+  const OnSubmit: SubmitHandler<RegisterInput> = (data) => {
+    RegisterRequest(data).then(() => router.history.push('/login'))
   };
 
   return (
@@ -45,25 +42,32 @@ const LoginForm = () => {
                 errors={errors}
               />
             </div>
-
             <div className="input-groups">
               <Label>Password</Label>
               <TextBox
                 type="password"
-                fieldName="password"
+                fieldName="password1"
                 register={register}
                 properties={{ required: true }}
                 errors={errors}
               />
             </div>
-
-            <PrimaryBtn type="submit">Login</PrimaryBtn>
+            <div className="input-groups">
+              <Label>Confirm Password</Label>
+              <TextBox
+                type="password"
+                fieldName="password2"
+                register={register}
+                properties={{ required: true }}
+                errors={errors}
+              />
+            </div>
+            <PrimaryBtn type="submit">Create new user</PrimaryBtn>
           </form>
         </div>
       </div>
-      <p className="register-link">Don't have account yet? Register <Link to="/register">here</Link>.</p>
     </div>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

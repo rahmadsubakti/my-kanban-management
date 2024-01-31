@@ -10,6 +10,7 @@ import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import Cookies from 'js-cookie';
 
 import LoginForm from '@/forms/LoginForm';
+import RegisterForm from '@/forms/RegisterForm';
 import { SideSection, MainSection } from '@/containers/section/Section';
 import BoardListSection from '@/containers/section/BoardListSection/BoardListSection';
 import BoardDetailSection from '@/containers/section/BoardDetailSection/BoardDetailSection';
@@ -20,7 +21,10 @@ const Main = () => {
   return (
     <main>
       <SideSection><BoardListSection /></SideSection>
-      <Outlet />
+      <MainSection>
+        <Header />
+        <Outlet />
+      </MainSection>
     </main>
   )
 }
@@ -42,6 +46,12 @@ const rootRoute = createRootRoute({
     )
   }
 });
+
+const RegisterFormRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: 'register',
+  component: RegisterForm,
+})
 
 const LoginFormRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -69,17 +79,16 @@ export const BoardDetailRoute = createRoute({
   getParentRoute: () => MainRoute,
   path: 'board/$boardId',
   loader: ({params}) => params.boardId,
-  component: () => {
-    return (
-      <MainSection>
-        <Header />
-        <BoardDetailSection />
-      </MainSection>
-    )
-  }
+  component: BoardDetailSection
 })
 
-const routeTree = rootRoute.addChildren([LoginFormRoute, MainRoute.addChildren([BoardDetailRoute])]);
+const routeTree = rootRoute.addChildren([
+  LoginFormRoute,
+  RegisterFormRoute, 
+  MainRoute.addChildren([
+    BoardDetailRoute
+  ])
+]);
 
 const router = createRouter({routeTree});
 

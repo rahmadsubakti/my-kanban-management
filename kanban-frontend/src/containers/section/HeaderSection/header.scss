@@ -3,6 +3,9 @@
 header {
   background-color: $dark-grey;
   border-left: 1px solid $lines-dark;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   .board-title-container {
     padding: 2rem;
@@ -17,6 +20,26 @@ header {
     .btn-groups {
       display: flex;
       gap: .5rem;
+    }
+  }
+
+  .user-info {
+    padding: 2rem;
+    margin-left: auto;
+
+    h4 {
+      color: $white;
+    }
+
+    .logout-btn {
+      background: none;
+      border: none;
+      color: $red;
+      cursor: pointer;
+
+      &:hover {
+        color: $red-hover;
+      }
     }
   }
 }
