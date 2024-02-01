@@ -1,31 +1,17 @@
-import './App.scss';
+import "./App.scss";
 
-import { SideSection, MainSection } from './containers/section/Section';
-import BoardListSection from './containers/section/BoardListSection/BoardListSection';
-import Header from './containers/section/HeaderSection/Header';
-import BoardDetailSection from './containers/section/BoardDetailSection/BoardDetailSection';
+import router from "./utils/route";
+import { RouterProvider } from "@tanstack/react-router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-const Main = () => {
-  return (
-    <main>
-      <SideSection><BoardListSection /></SideSection>
-      <MainSection>
-        <Header />
-        <BoardDetailSection />
-      </MainSection>
-    </main>
-  )
-}
-
-import LoginForm from './forms/LoginForm';
-import router from './utils/route';
-import { RouterProvider } from '@tanstack/react-router';
+const queryClient = new QueryClient();
 
 function App() {
-
   return (
-    <RouterProvider router={router} />
-  )
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 }
 
 export default App;

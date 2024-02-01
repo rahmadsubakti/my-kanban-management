@@ -6,7 +6,7 @@ import { BoardType, ColumnType, TaskType, SubTaskType } from "./types";
 import { fetchBoardDetail } from "./request";
 
 type Actions = {
-  getBoardDetail: (id:string) => void
+  setBoard: (data:BoardType) => void
   editBoard: (name:string) => void,
   resetBoard: () => void,
   addColumn: (id:string, name:string) => void,
@@ -27,15 +27,12 @@ const initialState : BoardType = {
 
 export const useBoardDetail = create<BoardType & Actions>((set) => ({
   ...initialState,
-  getBoardDetail: (id) => {
-    if (id != "") {
-      fetchBoardDetail(id)
-        .then(res => set({
-          id: res.id,
-          name: res.name,
-          columns: res.columns
-        }))
-    }
+  setBoard: (data) => {
+    set({
+      id: data.id,
+      name: data.name,
+      columns: data.columns
+    })
   },
   editBoard: name => set({name: name}),
   resetBoard: () => set(initialState),

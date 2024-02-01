@@ -68,7 +68,7 @@ export const fetchBoardDetail = async (id) => {
   const config = generateConfig(true)
   const url = mainUrl + `board/${id}`;
   const response = await axios.get(url, config);
-  return await response.data;
+  return response;
 }
 
 export const sendBoardAdd = async (data) => {

@@ -4,6 +4,10 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useDrop } from "react-dnd";
 
+import { useQuery } from "@tanstack/react-query";
+
+import { ring } from 'ldrs'
+
 import { useBoardDetail } from "@/utils/stateStore";
 import TaskSegment from "@/components/TaskSegment/TaskSegment";
 import { EditButton, DeleteButton } from "@/components/IconButton/IconButton";
@@ -16,10 +20,15 @@ import DeleteDialog from "@/containers/Dialog/Dialog";
 import { BoardDetailRoute } from "@/utils/route";
 
 import { ColumnType, TaskType } from "@/utils/types";
-import { sendColumnDelete } from "@/utils/request";
-import { sendTaskMove } from "@/utils/request";
+import { 
+  fetchBoardDetail,
+  sendColumnDelete,
+  sendTaskMove
+} from "@/utils/request";
 
 import "./board-detail-section.scss";
+
+ring.register()
 
 const EmptyColumn = () => {
   const [showModalCreateColumn, openModalCreateColumn, closeModalCreateColumn] = useModal();
@@ -147,23 +156,43 @@ const BoardDetailContent = () => {
 };
 
 const BoardDetailSection = () => {
-  const { id, getBoardDetail, resetBoard } = useBoardDetail();
+  const { setBoard, resetBoard } = useBoardDetail();
   const boardId = BoardDetailRoute.useLoaderData();
 
-  useEffect(() => {
-    getBoardDetail(boardId);
+  /*useEffect(() => {
+    fetchBoardDetail(boardId).then(res => setBoard(res.data));
     return () => resetBoard();
-  }, [boardId])
+  }, [boardId])*/
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: [boardId],
+    queryFn: () => fetchBoardDetail(boardId)
+  })
+
+  useEffect(() => {
+    if (!isLoading) {
+      setBoard(data?.data)
+    }
+    return () => resetBoard();
+  }, [isLoading, data])
+
+  if (isLoading) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 'calc(100vw - 300px)',
+        height: 'calc(100vh - 94px)'
+      }}>
+        <l-ring size="60" color="#635FC7"></l-ring>
+      </div>
+    )
+  }
 
   return (
     <section className="board-detail">
       <BoardDetailContent />
-      {/*id != ""
-        ?
-          <BoardDetailContent />
-        :
-          <h1>Select Board</h1>
-  */}
     </section>
   );
 };

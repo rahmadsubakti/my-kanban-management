@@ -25,6 +25,7 @@ const RegisterForm = () => {
 
   const OnSubmit: SubmitHandler<RegisterInput> = (data) => {
     RegisterRequest(data).then(() => router.history.push('/login'))
+    .catch(res => alert(res.errors))
   };
 
   return (

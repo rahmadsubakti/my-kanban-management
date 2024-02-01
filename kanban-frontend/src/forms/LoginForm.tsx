@@ -27,7 +27,8 @@ const LoginForm = () => {
   const OnSubmit: SubmitHandler<LoginInput> = (data) => {
     loginRequest(data)
       .then((res) => Cookies.set("token", res.data.key))
-      .then(() => router.history.push("/"));
+      .then(() => router.history.push("/"))
+      .catch(() => alert("You might've entered wrong username or password"))
   };
 
   return (

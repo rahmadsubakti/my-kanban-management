@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 
 import { useBoardList, useBoardDetail } from "@/utils/stateStore";
@@ -52,11 +53,9 @@ const HeaderContent = ({ id, name }) => {
 };
 
 const UserInfo = () => {
-  const [userName, setUserName] = useState('')
-
-  useEffect(() => {
-    getUserInfoRequest()
-      .then(res => setUserName(res.data.username))
+  const { data, isLoading } = useQuery({
+    queryKey: [''],
+    queryFn: () => getUserInfoRequest()
   })
 
   const onLogout = () => {
@@ -64,9 +63,14 @@ const UserInfo = () => {
       .then(() => Cookies.remove('token'))
       .then(() => router.history.push('/'))
   }
+
+  if (isLoading) {
+    return <p>loading....</p>
+  }
+
   return (
     <div className="user-info">
-      <h4>Hi, {userName}</h4>
+      <h4>Hi, {data?.data.username}</h4>
       <button className="logout-btn" onClick={onLogout}>Logout</button>
     </div>
   )
