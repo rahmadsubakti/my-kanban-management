@@ -1,0 +1,23 @@
+@import '/src/global-styles/colors';
+@import '/src/global-styles/typography';
+
+.textarea-container {
+  width: 100%;
+  border-radius: .25rem;
+  position: relative;
+
+  textarea {
+    background: transparent;
+    border: 1px solid $lines-dark;
+    padding: .5rem 1rem;
+    width: 100%;
+    height: 6rem;
+    resize: none;
+    color: $white;
+    @include body-l;
+
+    &:focus {
+      outline: 1px solid $white;
+    }
+  }
+}

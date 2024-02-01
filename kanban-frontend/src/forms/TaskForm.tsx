@@ -2,6 +2,7 @@ import {useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
 
 import Label from "@/components/Label/Label";
 import TextBox from "@/components/TextBox/TextBox";
+import TextArea from '@/components/TextArea/TextArea';
 import { DeleteItemButton } from "@/components/IconButton/IconButton";
 import { PrimaryBtn, SecondaryBtn } from "@/components/Button/Button";
 import { useBoardDetail } from '@/utils/stateStore';
@@ -43,15 +44,10 @@ const TaskForm = ({value, columnId, closeModal}:TaskFormType) => {
   });
 
   const onSubmit:SubmitHandler<TaskInput> = data => {
-    // for adding new task logic
-    // send first to server
-    // then get new id from the response
     if (value) {
       sendTaskEdit(value.id, data).then(res => editTask(columnId, value.id, res.data))
-      //editTask(columnId, value.id, data);
     } else {
       sendTaskAdd(columnId, data).then(res => addTask(columnId, res.data))
-      //addTask(columnId, data)
     }
     closeModal();
   };
@@ -74,12 +70,19 @@ const TaskForm = ({value, columnId, closeModal}:TaskFormType) => {
 
         <div className="input-groups">
           <Label>Description</Label>
+          {/*
           <TextBox
             type="text"
             fieldName="description"
             register={register}
             properties={{required: false}}
             errors={errors}
+          />
+          */}
+          <TextArea
+            id="description"
+            fieldName="description"
+            register={register}
           />
         </div>
 
