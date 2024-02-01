@@ -23,3 +23,16 @@ class RegisterTests(APITestCase):
         response.render()
         content = json.loads(response.content)
         self.assertIsNotNone(content['key'])
+
+    def test_register_unsuccessfully(self):
+        """
+        Failed register due to unmatch passwords
+        """
+        url = reverse('my-rest-register')
+        data = {'username': 'testuser', 'password1': 'passwdtest', 'password2': 'wrongpasswd'}
+        response = self.client.post(url, data=data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        
+        response.render()
+        content = json.loads(response.content)
+        self.assertEqual(content["non_field_errors"][0], "The two password fields didn't match.")
