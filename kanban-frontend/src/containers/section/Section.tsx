@@ -1,26 +1,31 @@
-import { useEffect } from 'react';
-import { useBoardDetail } from '@/utils/stateStore';
-import { BoardDetailRoute } from '@/utils/route';
+import { Link } from '@tanstack/react-router';
 
+import logo from '@/logo.svg';
 import './section.scss';
 
 type sectionType = {
   children: any
 }
 
-export const SideSection = ({children}:sectionType) => 
-  <section className="side-section">{children}</section>
+const Logo = () => {
+  return (
+    <Link to="/" className="logo">
+      <img src={logo} />
+      <h1>kanban</h1>
+    </Link>
+  )
+}
+
+export const SideSection = ({children}:sectionType) => {
+  return (
+    <section className="side-section">
+      <Logo />
+      {children}
+    </section>
+  )
+}
 
 export const MainSection = ({children}:sectionType) => {
-  //const { getBoardDetail, resetBoard } = useBoardDetail();
-  //const boardId = '5b7f0dd9-1a92-4d46-b8fe-8615f14cb73e';
-  //const boardId = BoardDetailRoute.useLoaderData();
-
-  /*useEffect(() => {
-    getBoardDetail(boardId);
-    return () => resetBoard();
-  }, [boardId])*/
-
   return (
     <section className="main-section">{children}</section>
   )

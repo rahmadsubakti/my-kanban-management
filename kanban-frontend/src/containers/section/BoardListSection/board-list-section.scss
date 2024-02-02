@@ -7,6 +7,11 @@
     padding: .875rem 2rem;
   }
 
+  .board-list {
+    max-height: 40vh;
+    overflow-y: auto;
+  }
+
   .btn-new-board {
     background-color: transparent;
     color: $main-purple;

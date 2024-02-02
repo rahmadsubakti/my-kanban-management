@@ -3,6 +3,14 @@
 .side-section {
   background-color: $dark-grey;
   height: 100vh;
+
+  .logo {
+    display: flex;
+    gap: .5rem;
+    margin: 2rem;
+    color: $white;
+    text-decoration: none;
+  }
 }
 
 .main-section {
