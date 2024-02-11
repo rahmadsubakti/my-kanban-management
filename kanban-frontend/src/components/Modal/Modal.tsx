@@ -24,8 +24,8 @@ const ModalContainer = ({closeModal, children}: ModalContainerType) => {
   }, [closeModal])
 
   return (
-    <div className="modal" ref={ref}>
-      <div className="modal-container">
+    <div className="bg-overlay-modal-theme modal" ref={ref}>
+      <div className="secondary-bg-theme modal-container">
         {children}
       </div>
     </div>

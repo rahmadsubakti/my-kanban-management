@@ -12,10 +12,6 @@
     align-items: center;
     gap: 1rem;
 
-    .task-title {
-      color: $white;
-    }
-
     .btn-groups {
       display: flex;
       flex-direction: column;
@@ -31,7 +27,7 @@
   .subtasks-container {
     .subtask-info {
       font-size: .75rem;
-      color: $white;
+      //color: $white;
       margin-bottom: 1rem;
     }
 

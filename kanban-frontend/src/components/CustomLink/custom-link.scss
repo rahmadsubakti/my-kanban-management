@@ -3,17 +3,17 @@
 
 .custom-link {
   display: inline-flex;
-  width: 100%;
+  width: calc(100% - 1.5rem);
   gap: 1rem;
-  padding: .875rem 2rem;
-  color: $white;
-  text-decoration: none;
+  padding: .875rem 0 .875rem 2rem;
+  color: $medium-grey;
   cursor: pointer;
   border-top-right-radius: 20rem; // for active link
   border-bottom-right-radius: 20rem; // for active link
 
   &.active {
     background-color: $main-purple; // for active link
+    color: $white;
   }
 
   &:hover {

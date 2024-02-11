@@ -2,7 +2,7 @@
 @import '/src/global-styles/typography';
 
 .task-segment {
-  background-color: $dark-grey;
+  //background-color: $dark-grey;
   border-radius: .5rem;
   padding: 1.5rem 1rem;
   display: flex;
@@ -10,10 +10,6 @@
   gap: .5rem;
   white-space: wrap;
   cursor: pointer;
-
-  h3 {
-    color: $white;
-  }
 
   .subtask-num {
     color: $medium-grey;

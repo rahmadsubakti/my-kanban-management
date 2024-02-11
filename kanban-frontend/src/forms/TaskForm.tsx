@@ -54,7 +54,7 @@ const TaskForm = ({value, columnId, closeModal}:TaskFormType) => {
   
   return (
     <div className="form-container">
-      <h2 className="form-title">{value ? "Edit" : "Create New"} Task</h2>
+      <h2 className="text-theme">{value ? "Edit" : "Create New"} Task</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
 
         <div className="input-groups">

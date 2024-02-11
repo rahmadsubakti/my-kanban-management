@@ -55,8 +55,8 @@ const TaskSegment = ({columnId, ...task}:ExtendedTaskType) => {
 
   return (
     <>
-    <div className="task-segment" ref={drag} style={style} onClick={onOpenModalTask}>
-      <h3>{task.title}</h3>
+    <div className="secondary-bg-theme task-segment" ref={drag} style={style} onClick={onOpenModalTask}>
+      <h3 className="text-theme">{task.title}</h3>
       <p className='subtask-num'>
         {numSubTasksDone} of {totalSubTasks} subtasks
       </p>

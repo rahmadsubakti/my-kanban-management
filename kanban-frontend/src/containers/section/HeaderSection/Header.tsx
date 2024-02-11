@@ -28,7 +28,7 @@ const HeaderContent = ({ id, name }) => {
   return (
     <>
       <div className="board-title-container">
-        <h1 className="board-title">{name}</h1>
+        <h1 className="text-theme">{name}</h1>
         <div className="btn-groups">
           <EditButton title="Edit this board" onClick={openModalEdit} />
           <DeleteButton title="Delete this board" onClick={openModalDel} />
@@ -70,7 +70,7 @@ const UserInfo = () => {
 
   return (
     <div className="user-info">
-      <h4>Hi, {data?.data.username}</h4>
+      <h4 className="text-theme">Hi, {data?.data.username}</h4>
       <button className="logout-btn" onClick={onLogout}>Logout</button>
     </div>
   )
@@ -84,7 +84,7 @@ const Header = () => {
   }, [name])
   
   return (
-    <header>
+    <header className="secondary-bg-theme">
       {id && <HeaderContent id={id} name={name} />}
       <UserInfo />
     </header>

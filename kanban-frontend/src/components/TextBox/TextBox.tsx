@@ -1,6 +1,7 @@
 import {ComponentPropsWithoutRef} from 'react';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 
+import '@/App.scss';
 import './textbox.scss';
 
 interface TextBoxType extends ComponentPropsWithoutRef<"input"> {
@@ -13,7 +14,7 @@ interface TextBoxType extends ComponentPropsWithoutRef<"input"> {
 const TextBox = ({fieldName, register, properties, errors, ...rest}:TextBoxType) => {
   return (
     <div className="textbox-container">
-      <input id={fieldName} {...rest} {...register(fieldName, properties)}/>
+      <input id={fieldName} className="text-theme" {...rest} {...register(fieldName, properties)}/>
       {errors[fieldName] && <span className="text-error">Can't be empty</span>}
     </div>
   )

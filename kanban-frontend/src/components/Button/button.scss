@@ -20,8 +20,12 @@
   }
 
   &.secondary {
-    background-color: $white;
-    color: $main-purple
+    background-color: var(--bg-secondary-btn);
+    color: $main-purple;
+
+    &:hover {
+      background-color: var(--bg-hover-secondary-btn)
+    }
   }
 
   &.danger {

@@ -140,7 +140,7 @@ const BoardDetailContent = () => {
           <ColumnSection key={column.id} {...column} />
         ))}
 
-        <button className="add-column" onClick={openModalCreateColumn}>
+        <button className="secondary-bg-theme add-column" onClick={openModalCreateColumn}>
           + New Column
         </button>
 

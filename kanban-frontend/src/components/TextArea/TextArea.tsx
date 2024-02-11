@@ -9,7 +9,7 @@ interface TTextArea extends ComponentPropsWithoutRef<"textarea"> {
 
 const TextArea = ({fieldName, register, ...rest}:TTextArea) => {
   return (
-    <div className="textarea-container">
+    <div className="text-theme textarea-container">
       <textarea {...rest} {...register(fieldName)} />
     </div>
   )

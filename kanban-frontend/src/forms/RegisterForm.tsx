@@ -1,4 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
+import { Link } from "@tanstack/react-router";
 
 import TextBox from "@/components/TextBox/TextBox";
 import Label from "@/components/Label/Label";
@@ -24,8 +25,9 @@ const RegisterForm = () => {
   } = useForm<RegisterInput>();
 
   const OnSubmit: SubmitHandler<RegisterInput> = (data) => {
-    RegisterRequest(data).then(() => router.history.push('/login'))
-    .catch(res => alert(res.errors))
+    RegisterRequest(data)
+      .then(() => router.history.push("/login"))
+      .catch((res) => alert(res.errors));
   };
 
   return (
@@ -67,6 +69,9 @@ const RegisterForm = () => {
           </form>
         </div>
       </div>
+      <p className="text-theme register-link">
+        Already have an account? Register <Link to="/login">here</Link>.
+      </p>
     </div>
   );
 };

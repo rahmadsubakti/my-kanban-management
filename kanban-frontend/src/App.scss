@@ -10,8 +10,48 @@
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
+:root[data-theme="light"] {
+  --bg-color: #{$light-grey};
+  --secondary-bg-color: #{$white};
+  --line-color: #{$lines-light};
+  --text: #{$black};
+  --bg-secondary-btn: #{$main-purple}#{10};
+  --bg-hover-secondary-btn: #{$main-purple}#{25};
+  --bg-modal-overlay-color: rgba(0,0,0,.1);
+}
+
+:root[data-theme="dark"] {
+  --bg-color: #{$very-dark-grey};
+  --secondary-bg-color: #{$dark-grey};
+  --line-color: #{$lines-dark};
+  --text: #{$white};
+  --bg-secondary-btn: #{$white};
+  --bg-hover-secondary-btn: #{$white};
+  --bg-modal-overlay-color: rgba(160, 152, 152, 0.1);  
+}
+
 body {
-  background-color: $dark-grey;
+  background-color: var(--bg-color);
+}
+
+html, body, #root, main {
+  height: 100%;
+}
+
+.bg-theme {
+  background-color: var(--bg-color);
+}
+
+.bg-overlay-modal-theme {
+  background-color: var(--bg-modal-overlay-color);
+}
+
+.secondary-bg-theme {
+  background-color: var(--secondary-bg-color);
+}
+
+.text-theme {
+  color: var(--text);
 }
 
 h1 {
@@ -28,6 +68,11 @@ h3 {
 
 h4 {
   @include heading-s;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
 }
 
 main {

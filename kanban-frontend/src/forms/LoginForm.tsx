@@ -62,7 +62,7 @@ const LoginForm = () => {
           </form>
         </div>
       </div>
-      <p className="register-link">Don't have account yet? Register <Link to="/register">here</Link>.</p>
+      <p className="text-theme register-link">Don't have account yet? Register <Link to="/register">here</Link>.</p>
     </div>
   );
 };

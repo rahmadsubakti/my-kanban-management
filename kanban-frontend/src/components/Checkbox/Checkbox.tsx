@@ -15,7 +15,7 @@ interface CheckboxType extends ComponentPropsWithoutRef<"input"> {
 
 const Checkbox = ({children, ...rest}:CheckboxType) => {
   return (
-    <label className="checkbox-container">
+    <label className="bg-theme text-theme checkbox-container">
       {/*<input type="checkbox" defaultChecked={checked} value={value} onChange={onChange}/>*/}
       <input type="checkbox" {...rest} />
       <span className="checkbox-checkmark"></span>

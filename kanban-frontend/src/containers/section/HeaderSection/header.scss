@@ -1,7 +1,7 @@
 @import '/src/global-styles/colors';
 
 header {
-  background-color: $dark-grey;
+  //background-color: $dark-grey;
   border-left: 1px solid $lines-dark;
   display: flex;
   justify-content: space-between;
@@ -26,10 +26,6 @@ header {
   .user-info {
     padding: 2rem;
     margin-left: auto;
-
-    h4 {
-      color: $white;
-    }
 
     .logout-btn {
       background: none;

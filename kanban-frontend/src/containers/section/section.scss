@@ -1,18 +1,13 @@
 @import '/src/global-styles/colors';
 
 .side-section {
-  background-color: $dark-grey;
-  height: 100vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
   .logo {
     display: flex;
     gap: .5rem;
     margin: 2rem;
-    color: $white;
-    text-decoration: none;
   }
-}
-
-.main-section {
-  background-color: $very-dark-grey;
 }
